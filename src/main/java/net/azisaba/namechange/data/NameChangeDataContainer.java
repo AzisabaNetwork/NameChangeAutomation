@@ -72,6 +72,7 @@ public class NameChangeDataContainer {
         if (data.getLore() != null && !data.getLore().isEmpty()) {
             conf.set(data.getNewWeaponID() + ".Item_Information.Item_Lore", String.join("|", data.getLore()));
         }
+        conf.set(data.getNewWeaponID() + ".Crafting.Enable", false);
         try {
             conf.save(file);
         } catch (IOException e) {
