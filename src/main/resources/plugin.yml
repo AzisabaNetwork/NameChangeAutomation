@@ -1,0 +1,13 @@
+name: ${project.name}
+main: net.azisaba.namechange.NameChangeAutomation
+version: ${project.version}
+author: siloneco
+description: ${project.description}
+website: ${project.url}
+depend: ["CrackShot"]
+commands:
+  namechange:
+    permission: namechangeautomation.command.namechange
+permissions:
+  namechangeautomation.command.namechange:
+    default: op
