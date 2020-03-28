@@ -3,8 +3,8 @@ package net.azisaba.namechange.data;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.gui.NameChangeGUI;
+import net.azisaba.namechange.util.FactoryResponse;
 import net.azisaba.namechange.util.NameChangeProgress;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -20,6 +19,8 @@ public class NameChangeDataContainer {
 
     private final NameChangeAutomation plugin;
     private final File dataFolder;
+    private final NameChangeFactory factory = new NameChangeFactory();
+
     private HashMap<UUID, NameChangeData> nameChangeDataMap = new HashMap<>();
 
     public NameChangeData getNameChangeData(Player p) {
@@ -38,91 +39,29 @@ public class NameChangeDataContainer {
     public WaitingAcceptData generateWeaponFile(NameChangeData data) {
         data.setProgress(NameChangeProgress.PROCESSING);
 
-        File previousFile = null;
-        File csFolder = new File(".").toPath().resolve("./plugins/CrackShot/weapons/").toFile();
-        for (File file : Objects.requireNonNull(csFolder.listFiles())) {
-            YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
-            ConfigurationSection sec = conf.getConfigurationSection("");
-            if (sec == null) {
-                continue;
-            }
-            if (sec.getKeys(false).contains(data.getPreviousWeaponID())) {
-                previousFile = file;
-                break;
-            }
-        }
-
-        if (previousFile == null) {
-            data.setProgress(NameChangeProgress.FAIL);
-            return null;
-        }
-
-        data.lockNewWeaponID();
-
-        File file = new File(".").toPath().resolve("plugins/CrackShot/weapons/NameChange/namechange_" + data.getPreviousWeaponID() + ".yml").toFile();
-        YamlConfiguration previousConf = YamlConfiguration.loadConfiguration(previousFile);
-        YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
-
-        ConfigurationSection sec = previousConf.getConfigurationSection(data.getPreviousWeaponID());
-        conf.set(data.getNewWeaponID(), sec);
-
-        if (data.getDisplayName() != null) {
-            conf.set(data.getNewWeaponID() + ".Item_Information.Item_Name", data.getDisplayName());
-        }
-        if (data.getLore() != null && !data.getLore().isEmpty()) {
-            conf.set(data.getNewWeaponID() + ".Item_Information.Item_Lore", String.join("|", data.getLore()));
-        }
-        conf.set(data.getNewWeaponID() + ".Crafting.Enable", false);
-        try {
-            conf.save(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-            data.setProgress(NameChangeProgress.FAIL);
-            return null;
-        }
-
         File acceptFile = new File(new File(plugin.getDataFolder(), "QueueWeapons/"), data.getNewWeaponID() + ".yml");
 
-        /*
-         * CSP
-         */
-        File previousCSPFile = null;
-        File cspFile = new File(".").toPath().resolve("plugins/CrackShotPlus/weapons/CSP_NAME_CHANGE.yml").toFile();
-        File cspFolder = new File(".").toPath().resolve("plugins/CrackShotPlus/weapons/").toFile();
-        if (!cspFolder.exists()) {
-            data.setProgress(NameChangeProgress.SUCCESS);
-            return new WaitingAcceptData(acceptFile, file, null, data.getUuid(), data.getName(), data.getPreviousWeaponID(), data.getNewWeaponID());
-        }
-        for (File file2 : Objects.requireNonNull(cspFolder.listFiles())) {
-            YamlConfiguration conf2 = YamlConfiguration.loadConfiguration(file2);
-            ConfigurationSection sec2 = conf2.getConfigurationSection("");
-            if (sec2 == null) {
-                continue;
-            }
-            if (sec2.getKeys(false).contains(data.getPreviousWeaponID())) {
-                previousCSPFile = file2;
-                break;
-            }
-        }
-
-        if (previousCSPFile == null) {
-            data.setProgress(NameChangeProgress.SUCCESS);
-            return new WaitingAcceptData(acceptFile, file, null, data.getUuid(), data.getName(), data.getPreviousWeaponID(), data.getNewWeaponID());
-        }
-
-        YamlConfiguration cspPreviousConf = YamlConfiguration.loadConfiguration(previousCSPFile);
-        YamlConfiguration cspConf = YamlConfiguration.loadConfiguration(cspFile);
-        cspConf.set(data.getNewWeaponID(), cspPreviousConf.getConfigurationSection(data.getPreviousWeaponID()));
-
-        try {
-            cspConf.save(cspFile);
-            data.setProgress(NameChangeProgress.SUCCESS);
-            return new WaitingAcceptData(acceptFile, file, cspFile, data.getUuid(), data.getName(), data.getPreviousWeaponID(), data.getNewWeaponID());
-        } catch (IOException e) {
-            e.printStackTrace();
+        FactoryResponse crackShotResponse = factory.executeForCrackShotFile(data);
+        if (crackShotResponse.getStatus() == FactoryResponse.FactoryStatus.FAIL) {
             data.setProgress(NameChangeProgress.FAIL);
             return null;
         }
+
+        FactoryResponse crackShotPlusResponse = factory.executeForCrackShotPlus(data);
+        if (crackShotPlusResponse.getStatus() == FactoryResponse.FactoryStatus.FAIL) {
+            data.setProgress(NameChangeProgress.FAIL);
+            return null;
+        }
+
+        FactoryResponse gsrResponse = factory.executeForGunScopeRecoil(data);
+        if (gsrResponse.getStatus() == FactoryResponse.FactoryStatus.FAIL) {
+            data.setProgress(NameChangeProgress.FAIL);
+            return null;
+        }
+
+        data.setProgress(NameChangeProgress.SUCCESS);
+        DataFiles files = new DataFiles(acceptFile, crackShotResponse.getFile(), crackShotPlusResponse.getFile(), gsrResponse.getFile());
+        return new WaitingAcceptData(files, data.getUuid(), data.getName(), data.getPreviousWeaponID(), data.getNewWeaponID());
     }
 
     public void loadData(Player p) {

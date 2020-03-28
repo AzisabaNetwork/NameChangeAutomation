@@ -27,8 +27,8 @@ public class AcceptQueueWeapons {
                 return data;
             }
             if (data.isCompleted() && data.isAbleToDelete()) {
-                if (data.getAcceptDataFile().exists() && !data.getAcceptDataFile().delete()) {
-                    plugin.getLogger().warning("Failed to delete a file (" + data.getAcceptDataFile().getAbsolutePath() + ")");
+                if (data.getFiles().getWaitingAcceptFile().exists() && !data.getFiles().getWaitingAcceptFile().delete()) {
+                    plugin.getLogger().warning("Failed to delete a file (" + data.getFiles().getWaitingAcceptFile().getAbsolutePath() + ")");
                 }
                 queueWeaponDataList.remove(data);
             }
@@ -55,8 +55,8 @@ public class AcceptQueueWeapons {
     public void delete(WaitingAcceptData data) {
         queueWeaponDataList.remove(data);
 
-        if (!data.getAcceptDataFile().delete()) {
-            Bukkit.getLogger().info("Failed to delete a file (" + data.getAcceptDataFile().getAbsolutePath() + ")");
+        if (!data.getFiles().getWaitingAcceptFile().delete()) {
+            Bukkit.getLogger().info("Failed to delete a file (" + data.getFiles().getWaitingAcceptFile().getAbsolutePath() + ")");
         }
     }
 
@@ -87,14 +87,19 @@ public class AcceptQueueWeapons {
             String newID = conf.getString("NewID");
             String cspFileName = conf.getString("CSPFileName", null);
             boolean completed = conf.getBoolean("Completed");
+            boolean hasGSRData = conf.getBoolean("HasGSRData");
 
             File csFile = new File(".").toPath().resolve("plugins/CrackShot/weapons/NameChange/namechange_" + previousID + ".yml").toFile();
             File cspFile = null;
             if (cspFileName != null) {
                 cspFile = new File(".").toPath().resolve("plugins/CrackShotPlus/weapons/" + cspFileName).toFile();
             }
+            File gsrFile = null;
+            if (hasGSRData) {
+                gsrFile = new File(".").toPath().resolve("plugins/GunScopeandRecoil/config_utf-8.yml").toFile();
+            }
 
-            WaitingAcceptData data = new WaitingAcceptData(file, csFile, cspFile, uuid, authorName, previousID, newID);
+            WaitingAcceptData data = new WaitingAcceptData(new DataFiles(file, csFile, cspFile, gsrFile), uuid, authorName, previousID, newID);
             if (completed) {
                 data.setCompleted();
             }
@@ -106,8 +111,8 @@ public class AcceptQueueWeapons {
     public void save() {
         for (WaitingAcceptData data : queueWeaponDataList) {
             if (data.isCompleted() && data.isAbleToDelete()) {
-                if (data.getAcceptDataFile().exists() && !data.getAcceptDataFile().delete()) {
-                    plugin.getLogger().warning("Failed to delete file (" + data.getAcceptDataFile().getAbsolutePath() + ")");
+                if (data.getFiles().getWaitingAcceptFile().exists() && !data.getFiles().getWaitingAcceptFile().delete()) {
+                    plugin.getLogger().warning("Failed to delete file (" + data.getFiles().getWaitingAcceptFile().getAbsolutePath() + ")");
                 }
                 continue;
             }
@@ -118,12 +123,13 @@ public class AcceptQueueWeapons {
             conf.set("PreviousID", data.getPreviousID());
             conf.set("NewID", data.getNewID());
             conf.set("Completed", data.isCompleted());
-            if (data.getCrackShotPlusDataFile() != null) {
-                conf.set("CSPFileName", data.getCrackShotPlusDataFile().getName());
+            if (data.getFiles().getCrackShotPlusFile() != null) {
+                conf.set("CSPFileName", data.getFiles().getCrackShotPlusFile().getName());
             }
+            conf.set("HasGSRData", data.getFiles().getGunScopeRecoilFile() != null);
 
             try {
-                conf.save(data.getAcceptDataFile());
+                conf.save(data.getFiles().getWaitingAcceptFile());
             } catch (IOException e) {
                 e.printStackTrace();
             }

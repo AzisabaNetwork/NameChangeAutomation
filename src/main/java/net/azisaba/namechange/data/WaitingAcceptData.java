@@ -5,16 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 
-import java.io.File;
 import java.util.UUID;
 
 @Getter
 @RequiredArgsConstructor
 public class WaitingAcceptData {
 
-    private final File acceptDataFile;
-    private final File crackShotDataFile;
-    private final File crackShotPlusDataFile;
+    private final DataFiles files;
     private final UUID authorUUID;
     private final String authorName;
     private final String previousID, newID;
@@ -25,8 +22,8 @@ public class WaitingAcceptData {
 
     public void setCompleted() {
         completed = true;
-        if (ableToDelete && acceptDataFile.exists() && !acceptDataFile.delete()) {
-            Bukkit.getLogger().warning("Failed to delete file. (" + acceptDataFile.getAbsolutePath() + ")");
+        if (ableToDelete && files.getWaitingAcceptFile().exists() && !files.getWaitingAcceptFile().delete()) {
+            Bukkit.getLogger().warning("Failed to delete file. (" + files.getWaitingAcceptFile().getAbsolutePath() + ")");
         }
     }
 }

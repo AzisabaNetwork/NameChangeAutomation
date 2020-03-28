@@ -25,50 +25,64 @@ public class DenyWeapons {
             denyIDList.add(data.getNewID());
         }
 
-        if (!data.getCrackShotDataFile().exists()) {
+        if (!data.getFiles().getCrackShotFile().exists()) {
             return;
         }
-        YamlConfiguration conf = YamlConfiguration.loadConfiguration(data.getCrackShotDataFile());
+        YamlConfiguration conf = YamlConfiguration.loadConfiguration(data.getFiles().getCrackShotFile());
         if (conf.getConfigurationSection("") == null) {
-            if (!data.getCrackShotDataFile().delete()) {
-                plugin.getLogger().warning("Failed to delete file (" + data.getCrackShotDataFile().getAbsolutePath() + ")");
+            if (!data.getFiles().getCrackShotFile().delete()) {
+                plugin.getLogger().warning("Failed to delete file (" + data.getFiles().getCrackShotFile().getAbsolutePath() + ")");
             }
         } else {
             if (conf.getConfigurationSection("").getKeys(false).size() > 1) {
                 conf.set(data.getNewID(), null);
                 try {
-                    conf.save(data.getCrackShotDataFile());
+                    conf.save(data.getFiles().getCrackShotFile());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
-                if (!data.getCrackShotDataFile().delete()) {
-                    plugin.getLogger().warning("Failed to delete file (" + data.getCrackShotDataFile().getAbsolutePath() + ")");
+                if (!data.getFiles().getCrackShotFile().delete()) {
+                    plugin.getLogger().warning("Failed to delete file (" + data.getFiles().getCrackShotFile().getAbsolutePath() + ")");
                 }
             }
         }
 
-        if (data.getCrackShotPlusDataFile() == null) {
-            return;
-        }
-
-        YamlConfiguration conf2 = YamlConfiguration.loadConfiguration(data.getCrackShotPlusDataFile());
-        if (conf2.getConfigurationSection("") == null) {
-            if (!data.getCrackShotPlusDataFile().delete()) {
-                plugin.getLogger().warning("Failed to delete file (" + data.getCrackShotPlusDataFile().getAbsolutePath() + ")");
-            }
-        } else {
-            if (conf2.getConfigurationSection("").getKeys(false).size() > 1) {
-                conf2.set(data.getNewID(), null);
-                try {
-                    conf2.save(data.getCrackShotPlusDataFile());
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if (data.getFiles().getCrackShotPlusFile() != null) {
+            YamlConfiguration conf2 = YamlConfiguration.loadConfiguration(data.getFiles().getCrackShotPlusFile());
+            if (conf2.getConfigurationSection("") == null) {
+                if (!data.getFiles().getCrackShotPlusFile().delete()) {
+                    plugin.getLogger().warning("Failed to delete file (" + data.getFiles().getCrackShotPlusFile().getAbsolutePath() + ")");
                 }
             } else {
-                if (!data.getCrackShotPlusDataFile().delete()) {
-                    plugin.getLogger().warning("Failed to delete file (" + data.getCrackShotPlusDataFile().getAbsolutePath() + ")");
+                if (conf2.getConfigurationSection("").getKeys(false).size() > 1) {
+                    conf2.set(data.getNewID(), null);
+                    try {
+                        conf2.save(data.getFiles().getCrackShotPlusFile());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    if (!data.getFiles().getCrackShotPlusFile().delete()) {
+                        plugin.getLogger().warning("Failed to delete file (" + data.getFiles().getCrackShotPlusFile().getAbsolutePath() + ")");
+                    }
                 }
+            }
+        }
+
+        if (data.getFiles().getGunScopeRecoilFile() != null) {
+            YamlConfiguration conf2 = YamlConfiguration.loadConfiguration(data.getFiles().getGunScopeRecoilFile());
+            conf2.set("Recoil." + data.getNewID(), null);
+            if (conf2.contains("Scope")) {
+                List<String> strList = conf2.getStringList("Scope");
+                strList.remove(data.getNewID());
+                conf2.set("Scope", strList);
+            }
+
+            try {
+                conf2.save(data.getFiles().getGunScopeRecoilFile());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

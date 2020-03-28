@@ -83,7 +83,7 @@ public class LastConfirmationGUI extends ClickableGUI {
                     plugin.getAcceptQueueWeapons().addWaitingData(waitingData);
 
                     CSDirector crackshot = (CSDirector) Bukkit.getPluginManager().getPlugin("CrackShot");
-                    crackshot.fillHashMaps(YamlConfiguration.loadConfiguration(waitingData.getCrackShotDataFile()));
+                    crackshot.fillHashMaps(YamlConfiguration.loadConfiguration(waitingData.getFiles().getCrackShotFile()));
 
                     plugin.getDataContainer().unregisterNameChangeData(p);
                     plugin.getDataContainer().removeFile(p);
