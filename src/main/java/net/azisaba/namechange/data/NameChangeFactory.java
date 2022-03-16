@@ -1,8 +1,10 @@
 package net.azisaba.namechange.data;
 
+import java.util.Locale;
 import lombok.NoArgsConstructor;
 import net.azisaba.namechange.util.FactoryResponse;
 import net.azisaba.namechange.util.NameChangeProgress;
+import net.azisaba.namechange.utils.FileNameUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -16,8 +18,11 @@ public class NameChangeFactory {
 
     public FactoryResponse executeForCrackShotFile(NameChangeData data) {
         File previousFile = null;
-        File csFolder = new File(".").toPath().resolve("./plugins/CrackShot/weapons/").toFile();
-        for (File file : Objects.requireNonNull(csFolder.listFiles())) {
+        File csFolder = new File("./plugins/CrackShot/weapons/");
+        for (File file : Objects.requireNonNull(csFolder.listFiles(pathname -> {
+            String fileName = pathname.getName().toLowerCase(Locale.ROOT);
+            return fileName.endsWith(".yml") || fileName.endsWith(".yaml");
+        }))) {
             YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
             ConfigurationSection sec = conf.getConfigurationSection("");
             if (sec == null) {
@@ -35,7 +40,8 @@ public class NameChangeFactory {
 
         data.lockNewWeaponID();
 
-        File file = new File(".").toPath().resolve("plugins/CrackShot/weapons/NameChange/namechange_" + data.getPreviousWeaponID() + ".yml").toFile();
+        File file = new File(new File(csFolder, "NameChange"),
+            FileNameUtils.sanitize("namechange_" + data.getPreviousWeaponID() + ".yml"));
         YamlConfiguration previousConf = YamlConfiguration.loadConfiguration(previousFile);
         YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
 
@@ -60,12 +66,15 @@ public class NameChangeFactory {
 
     public FactoryResponse executeForCrackShotPlus(NameChangeData data) {
         File previousFile = null;
-        File file = new File(".").toPath().resolve("plugins/CrackShotPlus/weapons/CSP_NAME_CHANGE.yml").toFile();
-        File cspFolder = new File(".").toPath().resolve("plugins/CrackShotPlus/weapons/").toFile();
+        File file = new File("./plugins/CrackShotPlus/weapons/CSP_NAME_CHANGE.yml");
+        File cspFolder = new File("./plugins/CrackShotPlus/weapons/");
         if (!cspFolder.exists()) {
             return new FactoryResponse(FactoryResponse.FactoryStatus.NO_NEED, null);
         }
-        for (File file2 : Objects.requireNonNull(cspFolder.listFiles())) {
+        for (File file2 : Objects.requireNonNull(cspFolder.listFiles(pathname -> {
+            String fileName = pathname.getName().toLowerCase(Locale.ROOT);
+            return fileName.endsWith(".yml") || fileName.endsWith(".yaml");
+        }))) {
             YamlConfiguration conf2 = YamlConfiguration.loadConfiguration(file2);
             ConfigurationSection sec2 = conf2.getConfigurationSection("");
             if (sec2 == null) {
@@ -96,7 +105,7 @@ public class NameChangeFactory {
     }
 
     public FactoryResponse executeForGunScopeRecoil(NameChangeData data) {
-        File file = new File(".").toPath().resolve("plugins/GunScopeandRecoil/config_utf-8.yml").toFile();
+        File file = new File("./plugins/GunScopeandRecoil/config_utf-8.yml");
         YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
         boolean updated = false;
         if (conf.getConfigurationSection("Recoil." + data.getPreviousWeaponID()) != null) {

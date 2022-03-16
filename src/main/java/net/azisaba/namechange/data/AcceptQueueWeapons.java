@@ -1,7 +1,9 @@
 package net.azisaba.namechange.data;
 
+import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
+import net.azisaba.namechange.utils.FileNameUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -78,7 +80,15 @@ public class AcceptQueueWeapons {
             return;
         }
 
-        for (File file : Objects.requireNonNull(folder.listFiles())) {
+        File crackShotWeaponsDir = new File("./plugins/CrackShot/weapons/");
+        File crackShotPlusDir = new File("./plugins/CrackShotPlus/weapons/");
+        File gsrConfigFile = new File("plugins/GunScopeandRecoil/config_utf-8.yml");
+        File nameChangeDir = new File("./plugins/CrackShot/weapons/NameChange/");
+
+        for (File file : Objects.requireNonNull(folder.listFiles(pathname -> {
+            String fileName = pathname.getName().toLowerCase(Locale.ROOT);
+            return fileName.endsWith(".yml") || fileName.endsWith(".yaml");
+        }))) {
             YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
 
             UUID uuid = UUID.fromString(conf.getString("UUID"));
@@ -89,14 +99,14 @@ public class AcceptQueueWeapons {
             boolean completed = conf.getBoolean("Completed");
             boolean hasGSRData = conf.getBoolean("HasGSRData");
 
-            File csFile = new File(".").toPath().resolve("plugins/CrackShot/weapons/NameChange/namechange_" + previousID + ".yml").toFile();
+            File csFile = new File(nameChangeDir, FileNameUtils.sanitize("namechange_" + previousID + ".yml"));
             File cspFile = null;
             if (cspFileName != null) {
-                cspFile = new File(".").toPath().resolve("plugins/CrackShotPlus/weapons/" + cspFileName).toFile();
+                cspFile = new File(crackShotPlusDir, cspFileName);
             }
             File gsrFile = null;
             if (hasGSRData) {
-                gsrFile = new File(".").toPath().resolve("plugins/GunScopeandRecoil/config_utf-8.yml").toFile();
+                gsrFile = gsrConfigFile;
             }
 
             WaitingAcceptData data = new WaitingAcceptData(new DataFiles(file, csFile, cspFile, gsrFile), uuid, authorName, previousID, newID);

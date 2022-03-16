@@ -5,6 +5,7 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.gui.NameChangeGUI;
 import net.azisaba.namechange.util.FactoryResponse;
 import net.azisaba.namechange.util.NameChangeProgress;
+import net.azisaba.namechange.utils.FileNameUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -39,7 +40,8 @@ public class NameChangeDataContainer {
     public WaitingAcceptData generateWeaponFile(NameChangeData data) {
         data.setProgress(NameChangeProgress.PROCESSING);
 
-        File acceptFile = new File(new File(plugin.getDataFolder(), "QueueWeapons/"), data.getNewWeaponID() + ".yml");
+        File acceptFile = new File(new File(plugin.getDataFolder(), "QueueWeapons"),
+            FileNameUtils.sanitize(data.getNewWeaponID() + ".yml"));
 
         FactoryResponse crackShotResponse = factory.executeForCrackShotFile(data);
         if (crackShotResponse.getStatus() == FactoryResponse.FactoryStatus.FAIL) {

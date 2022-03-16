@@ -1,6 +1,7 @@
 package net.azisaba.namechange;
 
 import com.shampaggon.crackshot.CSDirector;
+import java.util.Locale;
 import lombok.Getter;
 import net.azisaba.namechange.chat.ChatReader;
 import net.azisaba.namechange.command.NameChangeCommand;
@@ -100,7 +101,10 @@ public class NameChangeAutomation extends JavaPlugin {
     }
 
     public void loadWeapons(CSDirector plugin, File directory) {
-        File[] files = directory.listFiles();
+        File[] files = directory.listFiles(pathname -> {
+            String fileName = pathname.getName().toLowerCase(Locale.ROOT);
+            return fileName.endsWith(".yml") || fileName.endsWith(".yaml");
+        });
         if (files == null) {
             return;
         }
