@@ -6,11 +6,13 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.WaitingAcceptData;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -53,6 +55,12 @@ public class PaperClickListener implements Listener {
 
         if (plugin.getDenyWeapons().isDenied(id)) {
             p.sendMessage(Chat.f("&cこの武器データは却下されました。アイテムを戻します。"));
+            if (getEmptySlots(p) < 2) {
+                p.sendMessage(Chat.f("&cインベントリに十分な空きがありません。銃が消える可能性があります。"));
+                p.sendMessage(Chat.f("&aインベントリを空けて再度実行してください。"));
+                return;
+            }
+
             p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 1, 1);
             p.getInventory().setItemInMainHand(null);
 
@@ -89,5 +97,18 @@ public class PaperClickListener implements Listener {
         p.getInventory().setItemInMainHand(weapon);
         p.sendMessage(Chat.f("&a武器を交換しました！"));
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+    }
+
+    private int getEmptySlots(Player p) {
+        Inventory inv = p.getInventory();
+        int count = 0;
+        for (int i = 0; i < 36; i++) {
+            ItemStack item = inv.getItem(i);
+            if (item == null || item.getType() == Material.AIR) {
+                count++;
+            }
+        }
+
+        return count;
     }
 }
