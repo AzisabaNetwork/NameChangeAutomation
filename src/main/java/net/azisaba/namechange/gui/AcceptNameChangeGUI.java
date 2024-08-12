@@ -63,18 +63,18 @@ public class AcceptNameChangeGUI extends ClickableGUI {
             return;
         }
         Inventory inv = e.getClickedInventory();
-        String id = inv.getTitle().substring(inv.getTitle().indexOf(ChatColor.YELLOW + "") + 2);
+        String id = inv.getViewers().getFirst().getOpenInventory().getTitle().substring(inv.getViewers().getFirst().getOpenInventory().getTitle().indexOf(ChatColor.YELLOW + "") + 2);
 
         WaitingAcceptData data = plugin.getAcceptQueueWeapons().getWaitingData(id);
 
         if (data == null) {
             p.closeInventory();
             p.sendMessage(Chat.f("&aこの武器はすでに他の運営によって許可されました。"));
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_PLING, 1, 1);
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
             return;
         }
 
-        if (item.getType() == Material.STAINED_CLAY) {
+        if (item.getType() == Material.TERRACOTTA) {
             p.closeInventory();
             data.setAbleToDelete(true);
             p.sendMessage(Chat.f("&a銃データの使用を許可しました"));
@@ -109,7 +109,7 @@ public class AcceptNameChangeGUI extends ClickableGUI {
 
     @Override
     public boolean isSameInventory(Inventory inv) {
-        return inv.getTitle().startsWith(Chat.f("&aAccept NameChange &7- &e")) && inv.getSize() == 27;
+        return inv.getViewers().getFirst().getOpenInventory().getTitle().startsWith(Chat.f("&aAccept NameChange &7- &e")) && inv.getSize() == 27;
     }
 
     public void initializeItems() {
@@ -117,8 +117,8 @@ public class AcceptNameChangeGUI extends ClickableGUI {
             return;
         }
 
-        sign = ItemHelper.create(Material.SIGN, Chat.f("&e« &a元のアイテム"), Chat.f("&a完成後のアイテム &e»"));
-        accept = ItemHelper.createItem(Material.STAINED_CLAY, 5, Chat.f("&a許可する"), Chat.f("&7これを押すと作成者は即座に交換/使用可能になります"));
+        sign = ItemHelper.create(Material.OAK_SIGN, Chat.f("&e« &a元のアイテム"), Chat.f("&a完成後のアイテム &e»"));
+        accept = ItemHelper.createItem(Material.TERRACOTTA, 5, Chat.f("&a許可する"), Chat.f("&7これを押すと作成者は即座に交換/使用可能になります"));
         deny = ItemHelper.create(Material.BARRIER, Chat.f("&c却下する"), Chat.f("&7これを押すとデータは削除され、復旧できません！"));
 
         itemsInitialized = true;

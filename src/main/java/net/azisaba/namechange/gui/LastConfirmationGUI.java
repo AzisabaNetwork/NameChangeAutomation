@@ -39,7 +39,7 @@ public class LastConfirmationGUI extends ClickableGUI {
         }
 
         inv.setItem(11, data.getNewItemStack());
-        inv.setItem(13, ItemHelper.create(Material.SIGN, Chat.f("&eこの内容で申請しますか？"), Chat.f("&7この操作は取り消せません！")));
+        inv.setItem(13, ItemHelper.create(Material.OAK_SIGN, Chat.f("&eこの内容で申請しますか？"), Chat.f("&7この操作は取り消せません！")));
         inv.setItem(15, confirm);
         inv.setItem(16, cancel);
 
@@ -101,7 +101,7 @@ public class LastConfirmationGUI extends ClickableGUI {
 
     @Override
     public boolean isSameInventory(Inventory inv) {
-        return inv.getTitle().equals(Chat.f("&eName Change &7- &cLast Confirm")) && inv.getSize() == 27;
+        return inv.getViewers().getFirst().getOpenInventory().getTitle().equals(Chat.f("&eName Change &7- &cLast Confirm")) && inv.getSize() == 27;
     }
 
     private void initializeItems() {
@@ -109,7 +109,7 @@ public class LastConfirmationGUI extends ClickableGUI {
             return;
         }
 
-        confirm = ItemHelper.createItem(Material.STAINED_CLAY, 5, Chat.f("&a申請する"), Chat.f("&7この操作は取り消せません！"));
+        confirm = ItemHelper.createItem(Material.TERRACOTTA, 5, Chat.f("&a申請する"), Chat.f("&7この操作は取り消せません！"));
         cancel = ItemHelper.create(Material.BARRIER, Chat.f("&cキャンセルする"));
 
         itemsInitialized = true;

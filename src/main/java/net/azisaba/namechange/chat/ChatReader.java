@@ -46,7 +46,7 @@ public class ChatReader {
             if (msg.contains("|")) {
                 p.sendMessage(Chat.f("&c使用できない文字が使われています！ &7( &e| &7)"));
                 p.sendMessage(Chat.f("&a全角にするか、他の縦棒を使用してください。"));
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 JSONMessage.create(Chat.f("&e⇓&a説明文を打ち込んで下さい！&e⇓  "))
                         .suggestCommand("")
                         .then(Chat.f("&b[クリックで補完]"))

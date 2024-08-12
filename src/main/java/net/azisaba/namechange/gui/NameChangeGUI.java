@@ -48,7 +48,7 @@ public class NameChangeGUI extends ClickableGUI {
 
         Inventory inv = Bukkit.createInventory(null, 9 * 6, Chat.f("&eName Change GUI"));
 
-        ItemStack backGroundItem = ItemHelper.createItem(Material.STAINED_GLASS_PANE, 15, " ");
+        ItemStack backGroundItem = ItemHelper.createItem(Material.WHITE_STAINED_GLASS_PANE, 15, " ");
         for (int i = 0; i < inv.getSize(); i++) {
             inv.setItem(i, backGroundItem);
         }
@@ -92,7 +92,7 @@ public class NameChangeGUI extends ClickableGUI {
         e.setCancelled(true);
 
         ItemStack item = e.getCurrentItem();
-        if (item.getType() == Material.STAINED_GLASS_PANE) {
+        if (item.getType() == Material.WHITE_STAINED_GLASS_PANE) {
             return;
         }
         if (item.isSimilar(closeItem)) {
@@ -117,12 +117,12 @@ public class NameChangeGUI extends ClickableGUI {
             }
             if (!plugin.getPluginConfig().getNameChangeable().contains(inventoryControl)) {
                 p.sendMessage(Chat.f("&cこのアイテムは名前変更できません！"));
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1f, 1f);
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                 return;
             }
             if (item.getAmount() > 1) {
                 p.sendMessage(Chat.f("&c1つにしてからクリックしてください！"));
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1f, 1f);
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                 return;
             }
 
@@ -166,7 +166,7 @@ public class NameChangeGUI extends ClickableGUI {
             if (!data.canUseThisData()) {
                 p.sendMessage(Chat.f("&aこのデータでは、他の銃と見分けがつきません！"));
                 p.sendMessage(Chat.f("&eアイテム名を変更してください。"));
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 p.closeInventory();
                 return;
             }
@@ -191,7 +191,7 @@ public class NameChangeGUI extends ClickableGUI {
 
     @Override
     public boolean isSameInventory(Inventory inv) {
-        return inv.getTitle().equals(Chat.f("&eName Change GUI")) && inv.getSize() == 9 * 6;
+        return inv.getViewers().getFirst().getOpenInventory().getTitle().equals(Chat.f("&eName Change GUI")) && inv.getSize() == 9 * 6;
     }
 
     public void deleteInventoryCache(Player p) {
@@ -205,9 +205,9 @@ public class NameChangeGUI extends ClickableGUI {
 
         closeItem = ItemHelper.create(Material.BARRIER, Chat.f("&c閉じる"));
         changeDisplayNameItem = ItemHelper.create(Material.NAME_TAG, Chat.f("&aアイテム名を変える"));
-        changeLoreItem = ItemHelper.create(Material.BOOK_AND_QUILL, Chat.f("&a説明文を変える"));
-        middleSign = ItemHelper.create(Material.SIGN, Chat.f("&e« &a元のアイテム"), Chat.f("&a完成後のアイテム &e»"));
-        completeItem = ItemHelper.createItem(Material.STAINED_CLAY, 5, Chat.f("&a次へ進む &7(最終確認)"));
+        changeLoreItem = ItemHelper.create(Material.WRITABLE_BOOK, Chat.f("&a説明文を変える"));
+        middleSign = ItemHelper.create(Material.OAK_SIGN, Chat.f("&e« &a元のアイテム"), Chat.f("&a完成後のアイテム &e»"));
+        completeItem = ItemHelper.createItem(Material.TERRACOTTA, 5, Chat.f("&a次へ進む &7(最終確認)"));
 
         itemsInitialized = true;
     }

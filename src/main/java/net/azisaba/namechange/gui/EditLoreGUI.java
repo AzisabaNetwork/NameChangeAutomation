@@ -111,7 +111,7 @@ public class EditLoreGUI extends ClickableGUI {
             NameChangeData data = plugin.getDataContainer().getNameChangeData(p);
             if (data == null) {
                 p.sendMessage(ChatColor.RED + "先に銃をセットしてください！");
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 1, 1);
+                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                 p.openInventory(plugin.getGuiDistributor().getGUI(NameChangeGUI.class).getInventory(p));
                 return;
             }
@@ -149,7 +149,7 @@ public class EditLoreGUI extends ClickableGUI {
 
     @Override
     public boolean isSameInventory(Inventory inv) {
-        return inv.getTitle().equals(Chat.f("&eLore Edit GUI")) && inv.getSize() == 9 * 6;
+        return inv.getViewers().getFirst().getOpenInventory().getTitle().equals(Chat.f("&eLore Edit GUI")) && inv.getSize() == 9 * 6;
     }
 
     private void initializeItems() {
@@ -158,12 +158,12 @@ public class EditLoreGUI extends ClickableGUI {
         }
 
         deleteLoreItem = ItemHelper.create(Material.BARRIER, Chat.f("&cこの行を削除する"));
-        editItem = ItemHelper.create(Material.BOOK_AND_QUILL, Chat.f("&aこの行を編集する"));
+        editItem = ItemHelper.create(Material.WRITABLE_BOOK, Chat.f("&aこの行を編集する"));
         moveToUp = ItemHelper.create(Material.TORCH, Chat.f("&eこの行を上へ移動する"));
-        moveToDown = ItemHelper.create(Material.REDSTONE_TORCH_ON, Chat.f("&eこの行を下へ移動する"));
+        moveToDown = ItemHelper.create(Material.REDSTONE_TORCH, Chat.f("&eこの行を下へ移動する"));
         lockedSlotItem = ItemHelper.create(Material.BARRIER, Chat.f("&cこの行はロックされています！"));
-        defaultSign = ItemHelper.create(Material.SIGN, " ");
-        completeItem = ItemHelper.createItem(Material.STAINED_CLAY, 5, Chat.f("&a完了 &7(最初のGUIに戻る)"));
+        defaultSign = ItemHelper.create(Material.OAK_SIGN, " ");
+        completeItem = ItemHelper.createItem(Material.TERRACOTTA, 5, Chat.f("&a完了 &7(最初のGUIに戻る)"));
 
         itemsInitialized = true;
     }
