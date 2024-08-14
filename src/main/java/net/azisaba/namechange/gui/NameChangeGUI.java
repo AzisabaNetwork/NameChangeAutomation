@@ -8,6 +8,7 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.chat.ChatContentType;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.gui.core.ClickableGUI;
+import net.azisaba.namechange.gui.custom.NameChange;
 import net.azisaba.namechange.utils.Chat;
 import net.azisaba.namechange.utils.ItemHelper;
 import org.bukkit.Bukkit;
@@ -46,7 +47,8 @@ public class NameChangeGUI extends ClickableGUI {
 
         initializeItems();
 
-        Inventory inv = Bukkit.createInventory(null, 9 * 6, Chat.f("&eName Change GUI"));
+        NameChange createinv = new NameChange("&eName Change GUI");
+        Inventory inv = createinv.getInventory();
 
         ItemStack backGroundItem = ItemHelper.createItem(Material.WHITE_STAINED_GLASS_PANE, 15, " ");
         for (int i = 0; i < inv.getSize(); i++) {
@@ -191,12 +193,13 @@ public class NameChangeGUI extends ClickableGUI {
 
     @Override
     public boolean isSameInventory(Inventory inv) {
-
-        if (inv.getViewers().getFirst() == null) {
+        NameChange ncholder;
+        if (inv.getHolder() instanceof NameChange){
+            ncholder = (NameChange) inv.getHolder();
+            return ncholder.getInventoryName().startsWith(Chat.f("&eName Change GUI")) && inv.getSize() == 9 * 6;
+        }else{
             return false;
         }
-
-        return inv.getViewers().getFirst().getOpenInventory().getTitle().equals(Chat.f("&eName Change GUI")) && inv.getSize() == 9 * 6;
     }
 
     public void deleteInventoryCache(Player p) {

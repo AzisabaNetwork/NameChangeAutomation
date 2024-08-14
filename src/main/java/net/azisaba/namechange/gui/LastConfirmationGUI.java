@@ -7,6 +7,7 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.data.WaitingAcceptData;
 import net.azisaba.namechange.gui.core.ClickableGUI;
+import net.azisaba.namechange.gui.custom.NameChange;
 import net.azisaba.namechange.util.NameChangeProgress;
 import net.azisaba.namechange.utils.Chat;
 import net.azisaba.namechange.utils.ItemHelper;
@@ -32,7 +33,8 @@ public class LastConfirmationGUI extends ClickableGUI {
     public Inventory getInventory(Player p) {
         initializeItems();
 
-        Inventory inv = Bukkit.createInventory(null, 27, Chat.f("&eName Change &7- &cLast Confirm"));
+        NameChange createinv = new NameChange("&eName Change &7- &cLast Confirm");
+        Inventory inv = createinv.getInventory();
         NameChangeData data = plugin.getDataContainer().getNameChangeData(p);
         if (data == null) {
             return null;
@@ -101,7 +103,13 @@ public class LastConfirmationGUI extends ClickableGUI {
 
     @Override
     public boolean isSameInventory(Inventory inv) {
-        return inv.getViewers().getFirst().getOpenInventory().getTitle().equals(Chat.f("&eName Change &7- &cLast Confirm")) && inv.getSize() == 27;
+        NameChange ncholder;
+        if (inv.getHolder() instanceof NameChange){
+            ncholder = (NameChange) inv.getHolder();
+            return ncholder.getInventoryName().startsWith(Chat.f("&eName Change &7- &cLast Confirm")) && inv.getSize() == 27;
+        }else{
+            return false;
+        }
     }
 
     private void initializeItems() {

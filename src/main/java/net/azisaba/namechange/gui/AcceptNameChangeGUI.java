@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.WaitingAcceptData;
 import net.azisaba.namechange.gui.core.ClickableGUI;
+import net.azisaba.namechange.gui.custom.NameChange;
 import net.azisaba.namechange.utils.Chat;
 import net.azisaba.namechange.utils.ItemHelper;
 import org.bukkit.Bukkit;
@@ -32,7 +33,8 @@ public class AcceptNameChangeGUI extends ClickableGUI {
 
     public Inventory getInventory(WaitingAcceptData data) {
         initializeItems();
-        Inventory inv = Bukkit.createInventory(null, 9 * 3, Chat.f("&aAccept NameChange &7- &e" + data.getNewID()));
+        NameChange createinv = new NameChange("&aAccept NameChange &7- &e" + data.getNewID());
+        Inventory inv = createinv.getInventory();
 
         CSUtility util = new CSUtility();
         ItemStack beforeItem = util.generateWeapon(data.getPreviousID());
@@ -55,6 +57,7 @@ public class AcceptNameChangeGUI extends ClickableGUI {
     public void onClickInventory(Player p, InventoryClickEvent e) {
         e.setCancelled(true);
 
+
         ItemStack item = e.getCurrentItem();
         if (item == null) {
             return;
@@ -63,7 +66,15 @@ public class AcceptNameChangeGUI extends ClickableGUI {
             return;
         }
         Inventory inv = e.getClickedInventory();
-        String id = inv.getViewers().getFirst().getOpenInventory().getTitle().substring(inv.getViewers().getFirst().getOpenInventory().getTitle().indexOf(ChatColor.YELLOW + "") + 2);
+        NameChange ncholder;
+        String id;
+        if (inv.getHolder() instanceof NameChange){
+            ncholder = (NameChange) inv.getHolder();
+            id = ncholder.getInventoryName().substring(ncholder.getInventoryName().indexOf(ChatColor.YELLOW + "") + 2);
+        }else{
+            return;
+        }
+
 
         WaitingAcceptData data = plugin.getAcceptQueueWeapons().getWaitingData(id);
 
@@ -109,7 +120,13 @@ public class AcceptNameChangeGUI extends ClickableGUI {
 
     @Override
     public boolean isSameInventory(Inventory inv) {
-        return inv.getViewers().getFirst().getOpenInventory().getTitle().startsWith(Chat.f("&aAccept NameChange &7- &e")) && inv.getSize() == 27;
+        NameChange ncholder;
+        if (inv.getHolder() instanceof NameChange){
+            ncholder = (NameChange) inv.getHolder();
+            return ncholder.getInventoryName().startsWith(Chat.f("&aAccept NameChange &7- &e")) && inv.getSize() == 27;
+        }else{
+            return false;
+        }
     }
 
     public void initializeItems() {

@@ -7,6 +7,7 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.chat.ChatContentType;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.gui.core.ClickableGUI;
+import net.azisaba.namechange.gui.custom.NameChange;
 import net.azisaba.namechange.utils.Chat;
 import net.azisaba.namechange.utils.ItemHelper;
 import org.bukkit.Bukkit;
@@ -43,7 +44,8 @@ public class EditLoreGUI extends ClickableGUI {
          * TODO: ここHashMapとかでInventory保存するなど最適化いるかも。時間無いからスキップ
          */
 
-        Inventory inv = Bukkit.createInventory(null, 9 * 6, Chat.f("&eLore Edit GUI"));
+        NameChange createinv = new NameChange("&eLore Edit GUI");
+        Inventory inv = createinv.getInventory();
         NameChangeData data = plugin.getDataContainer().getNameChangeData(p);
         boolean hasLine = true;
         for (int line = 0; line < 6; line++) {
@@ -149,7 +151,13 @@ public class EditLoreGUI extends ClickableGUI {
 
     @Override
     public boolean isSameInventory(Inventory inv) {
-        return inv.getViewers().getFirst().getOpenInventory().getTitle().equals(Chat.f("&eLore Edit GUI")) && inv.getSize() == 9 * 6;
+        NameChange ncholder;
+        if (inv.getHolder() instanceof NameChange){
+            ncholder = (NameChange) inv.getHolder();
+            return ncholder.getInventoryName().startsWith(Chat.f("&eLore Edit GUI")) && inv.getSize() == 9 * 6;
+        }else{
+            return false;
+        }
     }
 
     private void initializeItems() {
