@@ -5,6 +5,7 @@ author: siloneco
 description: ${project.description}
 website: ${project.url}
 depend: ["CrackShot"]
+api-version: 1.16
 commands:
   namechange:
     permission: namechangeautomation.command.namechange

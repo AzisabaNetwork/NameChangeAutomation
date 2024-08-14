@@ -24,7 +24,8 @@ public class ChatListener implements Listener {
         }
 
         e.setCancelled(true);
-        plugin.getChatReader().onChat(p, msg);
+        plugin.getServer().getScheduler().runTask(plugin, () -> plugin.getChatReader().onChat(p, msg));
+
     }
 
     @EventHandler

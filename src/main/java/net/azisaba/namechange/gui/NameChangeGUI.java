@@ -191,6 +191,11 @@ public class NameChangeGUI extends ClickableGUI {
 
     @Override
     public boolean isSameInventory(Inventory inv) {
+
+        if (inv.getViewers().getFirst() == null) {
+            return false;
+        }
+
         return inv.getViewers().getFirst().getOpenInventory().getTitle().equals(Chat.f("&eName Change GUI")) && inv.getSize() == 9 * 6;
     }
 
