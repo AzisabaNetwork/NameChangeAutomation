@@ -26,6 +26,8 @@ import java.io.File;
 @Getter
 public class NameChangeAutomation extends JavaPlugin {
 
+    public static NameChangeAutomation INSTANCE;
+
     private ClickableGUIDistributor guiDistributor;
     private NameChangeDataContainer dataContainer;
     private AcceptQueueWeapons acceptQueueWeapons;
@@ -36,6 +38,8 @@ public class NameChangeAutomation extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        INSTANCE = this;
+
         pluginConfig = new PluginConfig(this);
         pluginConfig.loadConfig();
 
