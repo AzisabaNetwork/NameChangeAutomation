@@ -12,9 +12,12 @@ import net.azisaba.namechange.utils.Chat;
 import net.azisaba.namechange.utils.ItemHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ItemConfirm extends GuiItem {
@@ -55,6 +58,14 @@ public class ItemConfirm extends GuiItem {
 
                 NameChangeAutomation.INSTANCE.getDataContainer().unregisterNameChangeData(gui.player);
                 NameChangeAutomation.INSTANCE.getDataContainer().removeFile(gui.player);
+
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    // 運営にネームド追加を通知する (試合鯖にいる人にも通知出来たらしたい)
+                    if (player.hasPermission("namechangeautomation.command.namechange")) {
+                        player.sendMessage("&a[Admin Message]: " + gui.player + "のネームド申請が追加されました");
+                        player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
+                    }
+                }
             } else if (data.getProgress() == NameChangeProgress.FAIL) {
                 gui.player.sendMessage(Chat.f("&c失敗しました。"));
                 gui.player.getInventory().addItem(util.generateWeapon("NAME"));
