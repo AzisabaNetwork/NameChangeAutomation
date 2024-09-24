@@ -6,10 +6,14 @@ import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.gui.pages.PageAcceptChange;
 import net.azisaba.namechange.utils.Chat;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemAccept extends GuiItem {
 
@@ -18,6 +22,10 @@ public class ItemAccept extends GuiItem {
     public ItemAccept(InventoryGui gui, WaitingAcceptData data) {
         super(gui, new ItemStack(Material.GREEN_TERRACOTTA));
         this.data = data;
+        this.setDisplayName(Chat.f("&a許可する"));
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text("&7これを押すと作成者は即座に交換/使用可能になります"));
+        this.setLore(lore);
     }
 
     @Override
