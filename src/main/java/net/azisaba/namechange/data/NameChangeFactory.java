@@ -104,6 +104,7 @@ public class NameChangeFactory {
         }
     }
 
+    //GSRを使わなくなったため未使用
     public FactoryResponse executeForGunScopeRecoil(NameChangeData data) {
         File file = new File("./plugins/GunScopeandRecoil/config_utf-8.yml");
         YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);

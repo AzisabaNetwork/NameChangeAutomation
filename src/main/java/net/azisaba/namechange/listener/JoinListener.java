@@ -1,7 +1,16 @@
 package net.azisaba.namechange.listener;
 
 import lombok.RequiredArgsConstructor;
+import me.rayzr522.jsonmessage.JSONMessage;
+import net.azisaba.namechange.NameChangeAutomation;
+import net.azisaba.namechange.data.AcceptQueueWeapons;
 import net.azisaba.namechange.data.NameChangeDataContainer;
+import net.azisaba.namechange.data.WaitingAcceptData;
+import net.azisaba.namechange.utils.Chat;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,5 +25,16 @@ public class JoinListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         container.loadData(p);
+        WaitingAcceptData data = new AcceptQueueWeapons(NameChangeAutomation.INSTANCE).nextAcceptWeapon();
+        if(data != null){
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                // 運営にネームド追加を通知する (試合鯖にいる人にも通知出来たらしたい)
+                if (player.hasPermission("namechangeautomation.command.namechange")) {
+                    TextComponent message = new TextComponent("&a[Admin Message]:&6ネームド申請が保留中です &2[クリックでGUIを開く]");
+                    message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/namechange"));
+                    player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
+                }
+            }
+        }
     }
 }
