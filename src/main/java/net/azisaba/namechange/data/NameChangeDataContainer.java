@@ -55,14 +55,14 @@ public class NameChangeDataContainer {
             return null;
         }
 
-        FactoryResponse gsrResponse = factory.executeForGunScopeRecoil(data);
-        if (gsrResponse.getStatus() == FactoryResponse.FactoryStatus.FAIL) {
-            data.setProgress(NameChangeProgress.FAIL);
-            return null;
-        }
+        //FactoryResponse gsrResponse = factory.executeForGunScopeRecoil(data);
+        //if (gsrResponse.getStatus() == FactoryResponse.FactoryStatus.FAIL) {
+        //    data.setProgress(NameChangeProgress.FAIL);
+        //    return null;
+        //}
 
         data.setProgress(NameChangeProgress.SUCCESS);
-        DataFiles files = new DataFiles(acceptFile, crackShotResponse.getFile(), crackShotPlusResponse.getFile(), gsrResponse.getFile());
+        DataFiles files = new DataFiles(acceptFile, crackShotResponse.getFile(), crackShotPlusResponse.getFile());
         return new WaitingAcceptData(files, data.getUuid(), data.getName(), data.getPreviousWeaponID(), data.getNewWeaponID());
     }
 

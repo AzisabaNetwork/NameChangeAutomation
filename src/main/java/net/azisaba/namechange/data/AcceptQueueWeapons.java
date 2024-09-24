@@ -82,7 +82,7 @@ public class AcceptQueueWeapons {
 
         File crackShotWeaponsDir = new File("./plugins/CrackShot/weapons/");
         File crackShotPlusDir = new File("./plugins/CrackShotPlus/weapons/");
-        File gsrConfigFile = new File("plugins/GunScopeandRecoil/config_utf-8.yml");
+        //File gsrConfigFile = new File("plugins/GunScopeandRecoil/config_utf-8.yml");
         File nameChangeDir = new File("./plugins/CrackShot/weapons/NameChange/");
 
         for (File file : Objects.requireNonNull(folder.listFiles(pathname -> {
@@ -104,12 +104,12 @@ public class AcceptQueueWeapons {
             if (cspFileName != null) {
                 cspFile = new File(crackShotPlusDir, cspFileName);
             }
-            File gsrFile = null;
-            if (hasGSRData) {
-                gsrFile = gsrConfigFile;
-            }
+            //File gsrFile = null;
+            //if (hasGSRData) {
+            //    gsrFile = gsrConfigFile;
+            //}
 
-            WaitingAcceptData data = new WaitingAcceptData(new DataFiles(file, csFile, cspFile, gsrFile), uuid, authorName, previousID, newID);
+            WaitingAcceptData data = new WaitingAcceptData(new DataFiles(file, csFile, cspFile), uuid, authorName, previousID, newID);
             if (completed) {
                 data.setCompleted();
             }
@@ -136,7 +136,7 @@ public class AcceptQueueWeapons {
             if (data.getFiles().getCrackShotPlusFile() != null) {
                 conf.set("CSPFileName", data.getFiles().getCrackShotPlusFile().getName());
             }
-            conf.set("HasGSRData", data.getFiles().getGunScopeRecoilFile() != null);
+            //conf.set("HasGSRData", data.getFiles().getGunScopeRecoilFile() != null);
 
             try {
                 conf.save(data.getFiles().getWaitingAcceptFile());

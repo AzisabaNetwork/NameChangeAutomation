@@ -9,6 +9,6 @@ import java.io.File;
 @RequiredArgsConstructor
 public class DataFiles {
 
-    private final File waitingAcceptFile, crackShotFile, crackShotPlusFile, gunScopeRecoilFile;
+    private final File waitingAcceptFile, crackShotFile, crackShotPlusFile;
 
 }
