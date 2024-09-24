@@ -10,7 +10,7 @@ import net.azisaba.namechange.gui.items.ItemSign;
 import org.bukkit.inventory.ItemStack;
 
 public class PageAcceptChange extends GuiPage {
-
+    private final InventoryGui gui;
     private final WaitingAcceptData data;
 
 
@@ -24,7 +24,7 @@ public class PageAcceptChange extends GuiPage {
         ItemStack beforeItem = util.generateWeapon(data.getPreviousID());
         ItemStack afterItem = util.generateWeapon(data.getNewID());
         this.setItem(10, beforeItem);
-        this.setItem(11, new ItemSign(gui));//GUI名が必要？
+        this.setItem(11, new ItemSign(gui));
         this.setItem(12, afterItem);
         this.setItem(14, new ItemAccept(gui,data));
         this.setItem(16, new ItemDeny(gui,data));
