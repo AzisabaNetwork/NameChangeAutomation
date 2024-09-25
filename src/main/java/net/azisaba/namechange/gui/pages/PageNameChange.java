@@ -49,7 +49,7 @@ public class PageNameChange extends GuiPage {
         this.setItem(29, new ItemChangeDisplayName(gui));
         this.setItem(31, new ItemChangeLore(gui));
         this.setItem(33, new ItemComplete(gui));
-        this.setItem(49, new ItemCancel(gui));
+        this.setItem(49, new ItemClose(gui));
     }
 
     @Override
