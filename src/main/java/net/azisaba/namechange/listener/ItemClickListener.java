@@ -3,7 +3,9 @@ package net.azisaba.namechange.listener;
 import com.shampaggon.crackshot.CSUtility;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
+import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.gui.NameChangeGUI;
+import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,7 +40,9 @@ public class ItemClickListener implements Listener {
         }
 
         // GUIを開く
-        p.openInventory(plugin.getGuiDistributor().getGUI(NameChangeGUI.class).getInventory(p));
+        InventoryGui gui = new InventoryGui(p);
+        gui.openPage(new PageNameChange(gui));
+
 
         plugin.getChatReader().unregisterNextChat(p);
     }

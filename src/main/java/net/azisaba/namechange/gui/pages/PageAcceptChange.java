@@ -13,9 +13,10 @@ public class PageAcceptChange extends GuiPage {
     private final InventoryGui gui;
     private final WaitingAcceptData data;
 
-
     public PageAcceptChange(InventoryGui gui, WaitingAcceptData data) {
-        super(gui, name, size);
+        super(gui, "&aAccept NameChange &7- &e" + data.getNewID(), 9*6);
+        this.gui = gui;
+        this.data = data;
     }
 
     @Override

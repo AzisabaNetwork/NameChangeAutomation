@@ -4,6 +4,7 @@ import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.utils.Chat;
 import net.kyori.adventure.text.Component;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,7 +16,7 @@ public class ItemSign extends GuiItem {
         super(gui, new ItemStack(Material.OAK_SIGN));
         this.setDisplayName(Chat.f("&e« &a元のアイテム"));
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("&a完成後のアイテム &e»"));
+        lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',"&a完成後のアイテム &e»") ));
         this.setLore(lore);
     }
 }

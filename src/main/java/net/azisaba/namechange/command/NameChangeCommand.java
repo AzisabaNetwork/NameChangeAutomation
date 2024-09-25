@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.WaitingAcceptData;
 import net.azisaba.namechange.gui.AcceptNameChangeGUI;
+import net.azisaba.namechange.gui.InventoryGui;
+import net.azisaba.namechange.gui.pages.PageAcceptChange;
+import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -32,7 +35,7 @@ public class NameChangeCommand implements CommandExecutor {
             return true;
         }
 
-        Inventory inv = ((AcceptNameChangeGUI) plugin.getGuiDistributor().getGUI(AcceptNameChangeGUI.class)).getInventory(data);
+        Inventory inv = new PageAcceptChange(new InventoryGui(p),data).inventory;
         p.openInventory(inv);
         p.playSound(p.getLocation(), Sound.ENTITY_BAT_TAKEOFF, 1, 2);
         return true;

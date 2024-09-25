@@ -70,7 +70,7 @@ public class DenyWeapons {
             }
         }
 
-        if (data.getFiles().getGunScopeRecoilFile() != null) {
+        /*if (data.getFiles().getGunScopeRecoilFile() != null) {
             YamlConfiguration conf2 = YamlConfiguration.loadConfiguration(data.getFiles().getGunScopeRecoilFile());
             conf2.set("Recoil." + data.getNewID(), null);
             if (conf2.contains("Scope")) {
@@ -84,7 +84,7 @@ public class DenyWeapons {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 
     public void deleteDenyInformation(String id) {
