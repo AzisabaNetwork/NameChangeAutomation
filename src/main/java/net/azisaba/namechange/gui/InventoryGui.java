@@ -12,6 +12,7 @@ public class InventoryGui {
     }
 
     public void openPage(GuiPage page){
+        this.player.closeInventory();
         page.setUp();
         this.player.openInventory(page.inventory);
         this.currentPage = page;
