@@ -5,6 +5,7 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.WaitingAcceptData;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.gui.pages.PageAcceptChange;
+import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -33,8 +34,8 @@ public class NameChangeCommand implements CommandExecutor {
             return true;
         }
 
-        Inventory inv = new PageAcceptChange(new InventoryGui(p),data).inventory;
-        p.openInventory(inv);
+        InventoryGui gui = new InventoryGui(p);
+        gui.openPage(new PageAcceptChange(gui,data));
         p.playSound(p.getLocation(), Sound.ENTITY_BAT_TAKEOFF, 1, 2);
         return true;
     }

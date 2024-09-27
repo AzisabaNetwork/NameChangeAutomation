@@ -44,7 +44,8 @@ public class ChatReader {
 
         if (type == ChatContentType.DISPLAY_NAME) {
             plugin.getDataContainer().getNameChangeData(p).setDisplayName(msg);
-            p.openInventory(new PageNameChange(new InventoryGui(p)).inventory);
+            InventoryGui gui = new InventoryGui(p);
+            gui.openPage(new PageNameChange(gui));
         } else if (type == ChatContentType.LORE) {
             if (msg.contains("|")) {
                 p.sendMessage(Chat.f("&c使用できない文字が使われています！ &7( &e| &7)"));
@@ -58,7 +59,8 @@ public class ChatReader {
                 return;
             }
             plugin.getDataContainer().getNameChangeData(p).receiveLoreChat(msg);
-            p.openInventory(new PageEditLore(new InventoryGui(p)).inventory);
+            InventoryGui gui = new InventoryGui(p);
+            gui.openPage(new PageEditLore(gui));
         }
 
         contentTypes.remove(p.getUniqueId());
