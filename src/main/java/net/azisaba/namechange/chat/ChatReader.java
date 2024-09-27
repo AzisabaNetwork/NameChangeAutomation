@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import me.rayzr522.jsonmessage.JSONMessage;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.gui.EditLoreGUI;
+import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.gui.NameChangeGUI;
+import net.azisaba.namechange.gui.pages.PageEditLore;
+import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -41,7 +44,7 @@ public class ChatReader {
 
         if (type == ChatContentType.DISPLAY_NAME) {
             plugin.getDataContainer().getNameChangeData(p).setDisplayName(msg);
-            p.openInventory(plugin.getGuiDistributor().getGUI(NameChangeGUI.class).getInventory(p));
+            p.openInventory(new PageNameChange(new InventoryGui(p)).inventory);
         } else if (type == ChatContentType.LORE) {
             if (msg.contains("|")) {
                 p.sendMessage(Chat.f("&c使用できない文字が使われています！ &7( &e| &7)"));
@@ -55,7 +58,7 @@ public class ChatReader {
                 return;
             }
             plugin.getDataContainer().getNameChangeData(p).receiveLoreChat(msg);
-            p.openInventory(plugin.getGuiDistributor().getGUI(EditLoreGUI.class).getInventory(p));
+            p.openInventory(new PageEditLore(new InventoryGui(p)).inventory);
         }
 
         contentTypes.remove(p.getUniqueId());
