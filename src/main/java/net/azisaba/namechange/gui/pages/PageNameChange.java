@@ -37,7 +37,7 @@ public class PageNameChange extends GuiPage {
                     meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', data.getDisplayName()));
                 }
                 if (data.getLore() != null) {
-                    meta.setLore(data.getLore());
+                    meta.lore(data.getLore());
                 }
                 afterItem.setItemMeta(meta);
             }
