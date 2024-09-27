@@ -27,13 +27,13 @@ public class PageEditLore extends GuiPage {
             ItemStack sign2 = new ItemStack(Material.OAK_SIGN);
             sign2.setAmount(line + 1);
             if (data != null) {
-                Component lore = null;
+                String lore = null;
                 if (data.getLore() != null && data.getLore().size() > line) {
-                    lore = data.getComponentLore().get(line);
+                    lore = data.getLore().get(line);
                 }
                 if (lore != null) {
                     ItemMeta meta = sign2.getItemMeta();
-                    meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + lore);
+                    meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + ChatColor.translateAlternateColorCodes('&',lore));
                     sign2.setItemMeta(meta);
                     hasLine = true;
                 } else {
