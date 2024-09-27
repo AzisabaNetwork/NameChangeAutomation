@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
@@ -25,7 +26,7 @@ public class ItemConfirm extends GuiItem {
     }
 
     @Override
-    public void onClick(){
+    public void onClick(InventoryClickEvent e){
         gui.player.closeInventory();
         CSUtility util = new CSUtility();
         if (Objects.equals(util.getWeaponTitle(gui.player.getInventory().getItemInMainHand()), "NAME")) {

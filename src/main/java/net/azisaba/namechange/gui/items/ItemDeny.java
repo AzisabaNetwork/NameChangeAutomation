@@ -9,6 +9,7 @@ import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemDeny extends GuiItem {
@@ -21,7 +22,7 @@ public class ItemDeny extends GuiItem {
     }
 
     @Override
-    public void onClick(){
+    public void onClick(InventoryClickEvent e){
 
         gui.player.closeInventory();
 

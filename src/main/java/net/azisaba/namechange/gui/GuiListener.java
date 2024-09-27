@@ -20,11 +20,11 @@ public class GuiListener implements Listener {
 
         GuiItem item = page.getItem(e.getSlot());
         if(item != null){
-            item.onClick();
+            item.onClick(e);
             if(e.getClick() == ClickType.RIGHT){
-                item.onRightClick();
+                item.onRightClick(e);
             }else if(e.getClick() == ClickType.LEFT){
-                item.onLeftClick();
+                item.onLeftClick(e);
             }
         }
 

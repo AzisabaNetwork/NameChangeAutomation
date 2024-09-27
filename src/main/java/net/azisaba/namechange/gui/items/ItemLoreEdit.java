@@ -8,6 +8,7 @@ import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemLoreEdit extends GuiItem {
@@ -18,7 +19,7 @@ public class ItemLoreEdit extends GuiItem {
         this.line = line;
     }
     @Override
-    public void onClick(){
+    public void onClick(InventoryClickEvent e){
         NameChangeData data = NameChangeAutomation.INSTANCE.getDataContainer().getNameChangeData(gui.player);
         NameChangeAutomation.INSTANCE.getChatReader().registerNextChat(gui.player, ChatContentType.LORE);
         data.setLoreInput(line);

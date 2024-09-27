@@ -4,6 +4,7 @@ import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemClose extends GuiItem {
@@ -14,7 +15,7 @@ public class ItemClose extends GuiItem {
     }
 
     @Override
-    public void onClick(){
+    public void onClick(InventoryClickEvent e){
         gui.currentPage.close();
     }
 

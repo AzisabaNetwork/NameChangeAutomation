@@ -10,6 +10,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class ItemAccept extends GuiItem {
     }
 
     @Override
-    public void onClick() {
+    public void onClick(InventoryClickEvent e) {
 
         gui.player.closeInventory();
 

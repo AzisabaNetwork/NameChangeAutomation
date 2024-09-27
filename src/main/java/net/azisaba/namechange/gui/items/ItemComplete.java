@@ -8,6 +8,7 @@ import net.azisaba.namechange.gui.pages.PageLastConfirmation;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemComplete extends GuiItem {
@@ -17,7 +18,7 @@ public class ItemComplete extends GuiItem {
     }
 
     @Override
-    public void onClick(){
+    public void onClick(InventoryClickEvent e){
         NameChangeData data = NameChangeAutomation.INSTANCE.getDataContainer().getNameChangeData(gui.player);
         if (data == null) return;
 

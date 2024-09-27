@@ -54,6 +54,5 @@ public class PageNameChange extends GuiPage {
 
     @Override
     public void back() {
-
     }
 }

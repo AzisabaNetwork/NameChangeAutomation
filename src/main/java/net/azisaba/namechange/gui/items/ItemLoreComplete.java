@@ -4,6 +4,7 @@ import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemLoreComplete extends GuiItem {
@@ -12,7 +13,7 @@ public class ItemLoreComplete extends GuiItem {
         this.setDisplayName(Chat.f("&c完了"));
     }
     @Override
-    public void onClick(){
+    public void onClick(InventoryClickEvent e){
         gui.currentPage.back();
     }
 }

@@ -1,6 +1,7 @@
 package net.azisaba.namechange.gui;
 
 import net.kyori.adventure.text.Component;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -15,9 +16,9 @@ public abstract class GuiItem {
         this.itemStack = itemStack;
     }
 
-    public void onClick(){}
-    public void onRightClick(){}
-    public void onLeftClick(){}
+    public void onClick(InventoryClickEvent e){}
+    public void onRightClick(InventoryClickEvent e){}
+    public void onLeftClick(InventoryClickEvent e){}
 
     public void setDisplayName(String name){
         ItemMeta meta = itemStack.getItemMeta();
