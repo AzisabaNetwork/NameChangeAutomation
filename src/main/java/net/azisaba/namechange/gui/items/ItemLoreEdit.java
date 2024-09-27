@@ -21,13 +21,13 @@ public class ItemLoreEdit extends GuiItem {
     public void onClick(){
         NameChangeData data = NameChangeAutomation.INSTANCE.getDataContainer().getNameChangeData(gui.player);
         NameChangeAutomation.INSTANCE.getChatReader().registerNextChat(gui.player, ChatContentType.LORE);
-        data.setLoreInput(line - 1);
+        data.setLoreInput(line);
         gui.player.closeInventory();
         JSONMessage msg = JSONMessage.create(Chat.f("&e⇓&a説明文を打ち込んで下さい！&e⇓  "));
-        if (data.getLore().size() >= line && data.getLore().get(line - 1) != null) {
+        if (data.getLore().size() >= line && data.getLore().get(line) != null) {
             msg.suggestCommand("")
                     .then(Chat.f("&b[クリックで補完]"))
-                    .suggestCommand(data.getLore().get(line - 1));
+                    .suggestCommand(data.getLore().get(line));
         }
         msg.send(gui.player);
     }
