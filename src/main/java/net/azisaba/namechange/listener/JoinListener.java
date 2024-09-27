@@ -1,12 +1,10 @@
 package net.azisaba.namechange.listener;
 
 import lombok.RequiredArgsConstructor;
-import me.rayzr522.jsonmessage.JSONMessage;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.AcceptQueueWeapons;
 import net.azisaba.namechange.data.NameChangeDataContainer;
 import net.azisaba.namechange.data.WaitingAcceptData;
-import net.azisaba.namechange.utils.Chat;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;

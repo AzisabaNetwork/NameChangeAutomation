@@ -4,7 +4,6 @@ import com.shampaggon.crackshot.CSUtility;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.gui.InventoryGui;
-import net.azisaba.namechange.gui.NameChangeGUI;
 import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.entity.Player;

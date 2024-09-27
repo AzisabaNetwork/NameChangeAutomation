@@ -10,7 +10,6 @@ import net.azisaba.namechange.gui.core.ClickableGUI;
 import net.azisaba.namechange.gui.custom.NameChange;
 import net.azisaba.namechange.utils.Chat;
 import net.azisaba.namechange.utils.ItemHelper;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;

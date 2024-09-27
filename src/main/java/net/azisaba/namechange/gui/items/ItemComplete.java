@@ -4,12 +4,10 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
-import net.azisaba.namechange.gui.LastConfirmationGUI;
 import net.azisaba.namechange.gui.pages.PageLastConfirmation;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemComplete extends GuiItem {

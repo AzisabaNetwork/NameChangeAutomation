@@ -2,7 +2,6 @@ package net.azisaba.namechange.gui.items;
 
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.WaitingAcceptData;
-import net.azisaba.namechange.gui.AcceptNameChangeGUI;
 import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.gui.pages.PageAcceptChange;
@@ -10,7 +9,6 @@ import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemDeny extends GuiItem {

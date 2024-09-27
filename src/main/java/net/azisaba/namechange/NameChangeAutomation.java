@@ -1,7 +1,6 @@
 package net.azisaba.namechange;
 
 import com.shampaggon.crackshot.CSDirector;
-import java.util.Locale;
 import lombok.Getter;
 import net.azisaba.namechange.chat.ChatReader;
 import net.azisaba.namechange.command.NameChangeCommand;
@@ -22,6 +21,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.Locale;
 
 @Getter
 public class NameChangeAutomation extends JavaPlugin {

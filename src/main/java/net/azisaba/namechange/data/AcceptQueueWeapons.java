@@ -1,6 +1,5 @@
 package net.azisaba.namechange.data;
 
-import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.utils.FileNameUtils;
@@ -9,10 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class AcceptQueueWeapons {

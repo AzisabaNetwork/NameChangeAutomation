@@ -1,6 +1,5 @@
 package net.azisaba.namechange.data;
 
-import java.util.Locale;
 import lombok.NoArgsConstructor;
 import net.azisaba.namechange.util.FactoryResponse;
 import net.azisaba.namechange.util.NameChangeProgress;
@@ -11,6 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 @NoArgsConstructor
