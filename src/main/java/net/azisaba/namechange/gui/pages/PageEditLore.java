@@ -29,7 +29,7 @@ public class PageEditLore extends GuiPage {
             if (data != null) {
                 Component lore = null;
                 if (data.getLore() != null && data.getLore().size() > line) {
-                    lore = data.getLore().get(line);
+                    lore = data.getComponentLore().get(line);
                 }
                 if (lore != null) {
                     ItemMeta meta = sign2.getItemMeta();

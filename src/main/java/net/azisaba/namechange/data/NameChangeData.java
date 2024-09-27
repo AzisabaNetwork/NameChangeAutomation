@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.util.NameChangeProgress;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -100,13 +101,20 @@ public class NameChangeData {
             meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName) + " ▪ «?»");
         }
         if (lore != null && !lore.isEmpty()) {
-            List<String> translatedLore = lore.stream()
+            List<Component> translatedLore = lore.stream()
                     .map(lore -> ChatColor.translateAlternateColorCodes('&', lore))
+                    .map(Component::text)
                     .collect(Collectors.toList());
-            meta.setLore(translatedLore);
+            meta.lore(translatedLore);
         }
         item.setItemMeta(meta);
         return item;
+    }
+    public List<Component> getComponentLore(){
+        return lore.stream()
+                .map(lore -> ChatColor.translateAlternateColorCodes('&', lore))
+                .map(Component::text)
+                .collect(Collectors.toList());
     }
 }
 

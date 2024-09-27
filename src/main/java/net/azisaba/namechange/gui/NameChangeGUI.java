@@ -69,7 +69,7 @@ public class NameChangeGUI extends ClickableGUI {
                     meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', data.getDisplayName()));
                 }
                 if (data.getLore() != null) {
-                    meta.lore(data.getLore());
+                    meta.lore(data.getComponentLore());
                 }
                 afterItem.setItemMeta(meta);
             }
