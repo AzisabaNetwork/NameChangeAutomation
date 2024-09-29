@@ -12,10 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class PageNameChange extends GuiPage {
-    private final InventoryGui gui;
     public PageNameChange(InventoryGui gui) {
         super(gui, ChatColor.translateAlternateColorCodes('&',"&eName Change GUI") , 54);
-        this.gui = gui;
     }
 
     @Override
