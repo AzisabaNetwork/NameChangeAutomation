@@ -5,8 +5,8 @@ import net.azisaba.namechange.gui.InventoryGui;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class ItemDeleteLore extends GuiItem {
-    public ItemDeleteLore(InventoryGui gui) {
-        super(gui, new ItemStack(Material.BARRIER));
+public class ItemEditItem extends GuiItem {
+    public ItemEditItem(InventoryGui gui) {
+        super(gui, new ItemStack(Material.WRITABLE_BOOK));
     }
 }

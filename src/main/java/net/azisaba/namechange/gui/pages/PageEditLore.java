@@ -12,10 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class PageEditLore extends GuiPage {
-    InventoryGui gui;
     public PageEditLore(InventoryGui gui) {
         super(gui, ChatColor.translateAlternateColorCodes('&',"&eLore Edit GUI"), 54);
-        this.gui = gui;
     }
 
     @Override

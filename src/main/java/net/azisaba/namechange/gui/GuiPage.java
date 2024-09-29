@@ -10,12 +10,14 @@ import java.util.HashMap;
 
 public abstract class GuiPage {
 
+    public InventoryGui gui;
     public Inventory inventory;
     public GuiListener listener;
     private HashMap<Integer, GuiItem> items = new HashMap<>();
 
     public GuiPage(InventoryGui gui, String name, int size) {
         inventory = Bukkit.createInventory(null, size, name);
+        this.gui = gui;
         listener = new GuiListener(this);
         Bukkit.getPluginManager().registerEvents(listener, NameChangeAutomation.INSTANCE);
     }
