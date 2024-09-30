@@ -67,6 +67,6 @@ public class PageEditLore extends GuiPage {
 
     @Override
     public void back() {
-
+        gui.openPage(new PageNameChange(gui));
     }
 }

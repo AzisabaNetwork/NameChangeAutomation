@@ -21,28 +21,10 @@ public class PageNameChange extends GuiPage {
         for (int i = 0; i < 54; i++) {
             this.setItem(i, new ItemStack(Material.WHITE_STAINED_GLASS_PANE));
         }
-        ItemStack beforeItem = null, afterItem = null;
         NameChangeData data = NameChangeAutomation.INSTANCE.getDataContainer().getNameChangeData(gui.player);
-        if (data != null) {
-            CSUtility utility = new CSUtility();
-            beforeItem = utility.generateWeapon(data.getPreviousWeaponID());
-
-            if (beforeItem != null) {
-                afterItem = beforeItem.clone();
-                ItemMeta meta = afterItem.getItemMeta();
-
-                if (data.getDisplayName() != null) {
-                    meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', data.getDisplayName()));
-                }
-                if (data.getLore() != null) {
-                    meta.lore(data.getComponentLore());
-                }
-                afterItem.setItemMeta(meta);
-            }
-        }
-        this.setItem(11, beforeItem);
+        this.setItem(11, new ItemBefore(gui,data));
         this.setItem(13, new ItemSign(gui));
-        this.setItem(15, afterItem);
+        this.setItem(15, new ItemAfter(gui,data));
 
         this.setItem(29, new ItemChangeDisplayName(gui));
         this.setItem(31, new ItemChangeLore(gui));
@@ -53,4 +35,10 @@ public class PageNameChange extends GuiPage {
     @Override
     public void back() {
     }
+
+    @Override
+    public void close() {
+        gui.player.closeInventory();
+    }
+
 }
