@@ -26,6 +26,6 @@ public class PageLastConfirmation extends GuiPage {
 
     @Override
     public void back() {
-
+        gui.openPage(new PageNameChange(gui));
     }
 }
