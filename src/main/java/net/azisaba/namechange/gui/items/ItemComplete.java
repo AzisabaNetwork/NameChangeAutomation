@@ -29,6 +29,6 @@ public class ItemComplete extends GuiItem {
             gui.player.closeInventory();
             return;
         }
-        gui.openPage(new PageLastConfirmation(gui));
+        gui.openPage(new PageLastConfirmation(gui,data));
     }
 }
