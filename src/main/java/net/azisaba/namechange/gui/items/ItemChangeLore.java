@@ -30,6 +30,12 @@ public class ItemChangeLore extends GuiItem {
             gui.player.openInventory(NameChangeAutomation.INSTANCE.getGuiDistributor().getGUI(NameChangeGUI.class).getInventory(gui.player));
             return;
         }
+        if (data.canUseThisData()) {
+            gui.player.sendMessage(Chat.f("&e先にアイテム名を変更してください!"));
+            gui.player.playSound(gui.player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+            gui.player.closeInventory();
+            return;
+        }
         gui.openPage(new PageEditLore(this.gui));
     }
 }

@@ -56,10 +56,7 @@ public class PageEditLore extends GuiPage {
         }
 
         if (data != null) {
-            ItemStack newItem = data.getNewItemStack();
-            if (newItem != null) {
-                this.setItem(16, newItem);
-            }
+            this.setItem(16, new ItemAfter(gui,data));
         }
 
         this.setItem(43, new ItemLoreComplete(gui));

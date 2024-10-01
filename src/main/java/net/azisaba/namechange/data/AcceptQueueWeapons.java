@@ -92,6 +92,7 @@ public class AcceptQueueWeapons {
             String previousID = conf.getString("PreviousID");
             String newID = conf.getString("NewID");
             String cspFileName = conf.getString("CSPFileName", null);
+            int customModelData = conf.getInt("CustomModelData",0);
             boolean completed = conf.getBoolean("Completed");
             boolean hasGSRData = conf.getBoolean("HasGSRData");
 
@@ -105,7 +106,7 @@ public class AcceptQueueWeapons {
             //    gsrFile = gsrConfigFile;
             //}
 
-            WaitingAcceptData data = new WaitingAcceptData(new DataFiles(file, csFile, cspFile), uuid, authorName, previousID, newID);
+            WaitingAcceptData data = new WaitingAcceptData(new DataFiles(file, csFile, cspFile), uuid, authorName, previousID, newID, customModelData);
             if (completed) {
                 data.setCompleted();
             }
@@ -128,7 +129,9 @@ public class AcceptQueueWeapons {
             conf.set("Name", data.getAuthorName());
             conf.set("PreviousID", data.getPreviousID());
             conf.set("NewID", data.getNewID());
+            conf.set("CustomModelData", data.getCustomModelData());
             conf.set("Completed", data.isCompleted());
+
             if (data.getFiles().getCrackShotPlusFile() != null) {
                 conf.set("CSPFileName", data.getFiles().getCrackShotPlusFile().getName());
             }

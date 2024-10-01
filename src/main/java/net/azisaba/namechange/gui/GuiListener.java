@@ -53,6 +53,9 @@ public class GuiListener implements Listener {
             ItemStack item2 = e.getCurrentItem();
             if(e.getView().getTopInventory() == e.getClickedInventory()){
                 if (e.getSlot() == 11) {
+                    if(e.getView().getTopInventory().getItem(e.getSlot()) == null){
+                        return;
+                    }
                     boolean success = returnItem(p, item2);
                     if (success) {
                         Inventory inv = e.getClickedInventory();
@@ -94,6 +97,9 @@ public class GuiListener implements Listener {
                 playSound(p);
 
                 NameChangeData data = new NameChangeData(p.getUniqueId(), p.getName());
+                if(item2.getItemMeta().hasCustomModelData()) {
+                    data.setCustomModelData(item2.getItemMeta().getCustomModelData());
+                }
                 data.setPreviousWeaponID(id);
 
                 NameChangeAutomation.INSTANCE.getDataContainer().registerNewNameChangeData(p, data);

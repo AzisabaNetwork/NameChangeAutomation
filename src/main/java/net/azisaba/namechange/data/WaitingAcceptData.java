@@ -15,6 +15,7 @@ public class WaitingAcceptData {
     private final UUID authorUUID;
     private final String authorName;
     private final String previousID, newID;
+    private final int customModelData;
 
     private boolean completed;
     @Setter

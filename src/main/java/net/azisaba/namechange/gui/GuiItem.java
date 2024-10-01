@@ -30,4 +30,10 @@ public abstract class GuiItem {
         meta.lore(lore);
         itemStack.setItemMeta(meta);
     }
+
+    public void setCMD(int custommodeldata) {
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.setCustomModelData(custommodeldata);
+        itemStack.setItemMeta(meta);
+    }
 }

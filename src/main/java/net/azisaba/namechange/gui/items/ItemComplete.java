@@ -1,11 +1,17 @@
 package net.azisaba.namechange.gui.items;
 
+import com.shampaggon.crackshot.CSUtility;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.gui.pages.PageLastConfirmation;
 import net.azisaba.namechange.utils.Chat;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -22,7 +28,7 @@ public class ItemComplete extends GuiItem {
         NameChangeData data = NameChangeAutomation.INSTANCE.getDataContainer().getNameChangeData(gui.player);
         if (data == null) return;
 
-        if (!data.canUseThisData()) {
+        if (data.canUseThisData()) {
             gui.player.sendMessage(Chat.f("&aこのデータでは、他の銃と見分けがつきません！"));
             gui.player.sendMessage(Chat.f("&eアイテム名を変更してください。"));
             gui.player.playSound(gui.player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);

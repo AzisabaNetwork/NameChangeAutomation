@@ -8,6 +8,7 @@ import net.azisaba.namechange.gui.pages.PageAcceptChange;
 import net.azisaba.namechange.utils.Chat;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -25,7 +26,7 @@ public class ItemAccept extends GuiItem {
         this.data = data;
         this.setDisplayName(Chat.f("&a許可する"));
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("&7これを押すと作成者は即座に交換/使用可能になります"));
+        lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',"&7これを押すと作成者は即座に交換/使用可能になります")));
         this.setLore(lore);
     }
 

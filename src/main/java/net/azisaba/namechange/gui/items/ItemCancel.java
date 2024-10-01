@@ -15,9 +15,9 @@ import java.util.List;
 public class ItemCancel extends GuiItem {
     public ItemCancel(InventoryGui gui) {
         super(gui, new ItemStack(Material.BARRIER));
-        this.setDisplayName(Chat.f("&c却下する"));
+        this.setDisplayName(Chat.f("&cやり直す"));
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',"&7これを押すとデータは削除され、復旧できません！")));
+        lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',"&7押すと前の画面に戻ります")));
         this.setLore(lore);
     }
 

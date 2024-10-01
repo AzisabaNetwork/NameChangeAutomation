@@ -63,7 +63,7 @@ public class NameChangeDataContainer {
 
         data.setProgress(NameChangeProgress.SUCCESS);
         DataFiles files = new DataFiles(acceptFile, crackShotResponse.getFile(), crackShotPlusResponse.getFile());
-        return new WaitingAcceptData(files, data.getUuid(), data.getName(), data.getPreviousWeaponID(), data.getNewWeaponID());
+        return new WaitingAcceptData(files, data.getUuid(), data.getName(), data.getPreviousWeaponID(), data.getNewWeaponID(),data.getCustomModelData() );
     }
 
     public void loadData(Player p) {
@@ -77,11 +77,13 @@ public class NameChangeDataContainer {
         String previousWeaponID = conf.getString("PreviousWeaponID");
         String displayName = conf.getString("DisplayName");
         List<String> lore = conf.getStringList("Lore");
+        int custommodeldata = conf.getInt("CustomModelData");
 
         NameChangeData data = new NameChangeData(uuid, p.getName());
         data.setPreviousWeaponID(previousWeaponID);
         data.setDisplayName(displayName);
         data.setLore(lore);
+        data.setCustomModelData(custommodeldata);
 
         nameChangeDataMap.put(uuid, data);
     }
@@ -93,6 +95,7 @@ public class NameChangeDataContainer {
             conf.set("PreviousWeaponID", data.getPreviousWeaponID());
             conf.set("DisplayName", data.getDisplayName());
             conf.set("Lore", data.getLore());
+            conf.set("CustomModelData", data.getCustomModelData());
 
             try {
                 conf.save(new File(dataFolder, data.getUuid().toString() + ".yml"));

@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.util.NameChangeProgress;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -26,6 +28,7 @@ public class NameChangeData {
     private String previousWeaponID;
 
     private String displayName;
+    private int customModelData;
     private List<String> lore = new ArrayList<>();
 
     @Getter(value = AccessLevel.PRIVATE)
@@ -82,12 +85,12 @@ public class NameChangeData {
 
     public boolean canUseThisData() {
         ItemStack item = getNewItemStack();
-
-        String newID = new CSUtility().getWeaponTitle(item);
-        if (newID == null) {
+        Component newDisplayName = item.getItemMeta().displayName();
+        ItemStack prevItem = new CSUtility().generateWeapon(getPreviousWeaponID());
+        if(newDisplayName == null || prevItem.getItemMeta().displayName() == null){
             return true;
         }
-        return newID.equals(previousWeaponID);
+        return newDisplayName.equals(prevItem.getItemMeta().displayName());
     }
 
     public ItemStack getNewItemStack() {
@@ -100,6 +103,9 @@ public class NameChangeData {
         if (displayName != null) {
             meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName) + " ▪ «?»");
         }
+        //CMD設定
+        meta.setCustomModelData(customModelData);
+
         if (lore != null && !lore.isEmpty()) {
             List<Component> translatedLore = lore.stream()
                     .map(lore -> ChatColor.translateAlternateColorCodes('&', lore))

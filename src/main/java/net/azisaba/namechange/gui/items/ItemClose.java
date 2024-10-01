@@ -16,7 +16,7 @@ public class ItemClose extends GuiItem {
 
     @Override
     public void onClick(InventoryClickEvent e){
-        gui.player.closeInventory();
+        gui.currentPage.back();
     }
 
 }

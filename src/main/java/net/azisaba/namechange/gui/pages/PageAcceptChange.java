@@ -4,9 +4,7 @@ import com.shampaggon.crackshot.CSUtility;
 import net.azisaba.namechange.data.WaitingAcceptData;
 import net.azisaba.namechange.gui.GuiPage;
 import net.azisaba.namechange.gui.InventoryGui;
-import net.azisaba.namechange.gui.items.ItemAccept;
-import net.azisaba.namechange.gui.items.ItemDeny;
-import net.azisaba.namechange.gui.items.ItemSign;
+import net.azisaba.namechange.gui.items.*;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,11 +19,9 @@ public class PageAcceptChange extends GuiPage {
     @Override
     public void setUp() {
         CSUtility util = new CSUtility();
-        ItemStack beforeItem = util.generateWeapon(data.getPreviousID());
-        ItemStack afterItem = util.generateWeapon(data.getNewID());
-        this.setItem(10, beforeItem);
+        this.setItem(10, new ItemBefore(gui,data));
         this.setItem(11, new ItemSign(gui));
-        this.setItem(12, afterItem);
+        this.setItem(12, new ItemAfter(gui,data));
         this.setItem(14, new ItemAccept(gui,data));
         this.setItem(16, new ItemDeny(gui,data));
     }

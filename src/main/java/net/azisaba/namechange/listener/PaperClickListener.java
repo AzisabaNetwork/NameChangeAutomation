@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -68,6 +69,9 @@ public class PaperClickListener implements Listener {
 
             ItemStack previousItem = new CSUtility().generateWeapon(data.getPreviousID());
             ItemStack nameChangeItem = new CSUtility().generateWeapon("NAME");
+            ItemMeta meta = previousItem.getItemMeta();
+            meta.setCustomModelData(data.getCustomModelData());
+            previousItem.setItemMeta(meta);
             p.getInventory().addItem(previousItem);
             p.getInventory().addItem(nameChangeItem);
 
