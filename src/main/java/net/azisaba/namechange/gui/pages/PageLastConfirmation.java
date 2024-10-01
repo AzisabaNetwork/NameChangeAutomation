@@ -12,7 +12,7 @@ import org.bukkit.Material;
 public class PageLastConfirmation extends GuiPage {
     NameChangeData data;
     public PageLastConfirmation(InventoryGui gui, NameChangeData data) {
-        super(gui, Chat.f("&eName Change &7- &cLast Confirm"), 54);
+        super(gui, Chat.f("&eName Change &7- &cLast Confirm"), 9*3);
         this.data = data;
     }
 

@@ -11,6 +11,7 @@ import net.azisaba.namechange.util.NameChangeProgress;
 import net.azisaba.namechange.utils.Chat;
 import net.azisaba.namechange.utils.ItemHelper;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -23,6 +24,7 @@ import java.util.Objects;
 public class ItemConfirm extends GuiItem {
     public ItemConfirm(InventoryGui gui) {
         super(gui, new ItemStack(Material.GREEN_TERRACOTTA));
+        this.setDisplayName(Chat.f("&cこれで申請する"));
     }
 
     @Override
@@ -62,7 +64,7 @@ public class ItemConfirm extends GuiItem {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     // 運営にネームド追加を通知する (試合鯖にいる人にも通知出来たらしたい)
                     if (player.hasPermission("namechangeautomation.command.namechange")) {
-                        player.sendMessage("&a[Admin Message]: " + gui.player + "のネームド申請が追加されました");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&a[Admin Message]: " + gui.player.getName() + "のネームド申請が追加されました"));
                         player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
                     }
                 }

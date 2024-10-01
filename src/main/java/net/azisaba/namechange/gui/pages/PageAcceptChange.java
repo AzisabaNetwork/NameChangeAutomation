@@ -7,13 +7,14 @@ import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.gui.items.ItemAccept;
 import net.azisaba.namechange.gui.items.ItemDeny;
 import net.azisaba.namechange.gui.items.ItemSign;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 public class PageAcceptChange extends GuiPage {
     private final WaitingAcceptData data;
 
     public PageAcceptChange(InventoryGui gui, WaitingAcceptData data) {
-        super(gui, "&aAccept NameChange &7- &e" + data.getNewID(), 9*6);
+        super(gui, ChatColor.translateAlternateColorCodes('&',"&aAccept NameChange &7- &e" + data.getNewID()), 9*3);
         this.data = data;
     }
 
