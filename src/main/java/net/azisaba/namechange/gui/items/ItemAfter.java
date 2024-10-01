@@ -8,8 +8,6 @@ import org.bukkit.ChatColor;
 
 public class ItemAfter extends GuiItem {
     public ItemAfter (InventoryGui gui, NameChangeData data) {
-        super(gui,new CSUtility().generateWeapon(data.getPreviousWeaponID()));
-        this.setDisplayName(ChatColor.translateAlternateColorCodes('&', data.getDisplayName()));
-        this.setLore(data.getComponentLore());
+        super(gui,data.getNewItemStack());
     }
 }

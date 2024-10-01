@@ -22,10 +22,14 @@ public class PageNameChange extends GuiPage {
             this.setItem(i, new ItemStack(Material.WHITE_STAINED_GLASS_PANE));
         }
         NameChangeData data = NameChangeAutomation.INSTANCE.getDataContainer().getNameChangeData(gui.player);
-        this.setItem(11, new ItemBefore(gui,data));
+        if(data != null){
+            this.setItem(11, new ItemBefore(gui,data));
+            this.setItem(15, new ItemAfter(gui,data));
+        }else{
+            this.setItem(11, new ItemStack(Material.AIR));
+            this.setItem(15, new ItemStack(Material.AIR));
+        }
         this.setItem(13, new ItemSign(gui));
-        this.setItem(15, new ItemAfter(gui,data));
-
         this.setItem(29, new ItemChangeDisplayName(gui));
         this.setItem(31, new ItemChangeLore(gui));
         this.setItem(33, new ItemComplete(gui));
@@ -36,9 +40,5 @@ public class PageNameChange extends GuiPage {
     public void back() {
     }
 
-    @Override
-    public void close() {
-        gui.player.closeInventory();
-    }
 
 }

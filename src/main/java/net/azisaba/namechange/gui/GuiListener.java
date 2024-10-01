@@ -6,7 +6,11 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +31,7 @@ public class GuiListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent e){
-        if(e.getClickedInventory() != page.inventory) return;
+        if(e.getView().getTopInventory() != page.inventory) return;
 
         GuiItem item = page.getItem(e.getSlot());
         if(item != null){
@@ -39,9 +43,28 @@ public class GuiListener implements Listener {
             }
         }
 
-        if(e.getClickedInventory() instanceof PageNameChange){
-            ItemStack item2 = e.getCurrentItem();
+        e.setCancelled(true);
+        Component pagenamechange = Component.text("Name Change GUI");
+        String plainTitle = PlainTextComponentSerializer.plainText().serialize(e.getView().title());
+        String plainPageNameChange = PlainTextComponentSerializer.plainText().serialize(pagenamechange);
+
+        if(plainTitle.equals(plainPageNameChange)){
             Player p = (Player) e.getWhoClicked();
+            ItemStack item2 = e.getCurrentItem();
+            if(e.getView().getTopInventory() == e.getClickedInventory()){
+                if (e.getSlot() == 11) {
+                    boolean success = returnItem(p, item2);
+                    if (success) {
+                        Inventory inv = e.getClickedInventory();
+                        inv.setItem(e.getSlot(), null);
+                        inv.setItem(e.getSlot() + 4, null);
+                        playSound(p);
+                        NameChangeAutomation.INSTANCE.getDataContainer().unregisterNameChangeData(p);
+                        NameChangeAutomation.INSTANCE.getDataContainer().removeFile(p);
+                    }
+                }
+            }
+            if(e.getClickedInventory() == page.inventory) return;
             CSUtility csUtility = new CSUtility();
             String id = csUtility.getWeaponTitle(item2);
             CSDirector director = (CSDirector) Bukkit.getPluginManager().getPlugin("CrackShot");
@@ -74,8 +97,6 @@ public class GuiListener implements Listener {
 
             NameChangeAutomation.INSTANCE.getDataContainer().registerNewNameChangeData(p, data);
         }
-
-        e.setCancelled(true);
     }
 
     @EventHandler
@@ -86,6 +107,18 @@ public class GuiListener implements Listener {
 
     private void playSound(Player p) {
         p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1f, 1f);
+    }
+
+    private boolean returnItem(Player p, ItemStack item) {
+        for (int i = 0; i < 36; i++) {
+            ItemStack item2 = p.getInventory().getItem(i);
+            if (item2 == null || item2.getType() == Material.AIR) {
+                p.getInventory().setItem(i, item);
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
