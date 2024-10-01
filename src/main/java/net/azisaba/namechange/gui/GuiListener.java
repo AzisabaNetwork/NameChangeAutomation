@@ -73,29 +73,31 @@ public class GuiListener implements Listener {
             if (inventoryControl == null) {
                 return;
             }
-            if (!NameChangeAutomation.INSTANCE.getPluginConfig().getNameChangeable().contains(inventoryControl)) {
-                p.sendMessage(Chat.f("&cこのアイテムは名前変更できません！"));
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                return;
-            }
-            if(item2 == null){
-                return;
-            }
-            if (item2.getAmount() > 1) {
-                p.sendMessage(Chat.f("&c1つにしてからクリックしてください！"));
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                return;
-            }
+            if (e.getView().getTopInventory().getItem(11) == null || e.getView().getTopInventory().getItem(11).getType() == Material.AIR) {
+                if (!NameChangeAutomation.INSTANCE.getPluginConfig().getNameChangeable().contains(inventoryControl)) {
+                    p.sendMessage(Chat.f("&cこのアイテムは名前変更できません！"));
+                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+                    return;
+                }
+                if (item2 == null) {
+                    return;
+                }
+                if (item2.getAmount() > 1) {
+                    p.sendMessage(Chat.f("&c1つにしてからクリックしてください！"));
+                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+                    return;
+                }
 
-            e.getInventory().setItem(11, item2);
-            e.getInventory().setItem(15, item2);
-            e.getClickedInventory().setItem(e.getSlot(), null);
-            playSound(p);
+                e.getInventory().setItem(11, item2);
+                e.getInventory().setItem(15, item2);
+                e.getClickedInventory().setItem(e.getSlot(), null);
+                playSound(p);
 
-            NameChangeData data = new NameChangeData(p.getUniqueId(), p.getName());
-            data.setPreviousWeaponID(id);
+                NameChangeData data = new NameChangeData(p.getUniqueId(), p.getName());
+                data.setPreviousWeaponID(id);
 
-            NameChangeAutomation.INSTANCE.getDataContainer().registerNewNameChangeData(p, data);
+                NameChangeAutomation.INSTANCE.getDataContainer().registerNewNameChangeData(p, data);
+            }
         }
     }
 
