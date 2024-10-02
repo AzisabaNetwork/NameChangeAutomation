@@ -1,5 +1,6 @@
 package net.azisaba.namechange.data;
 
+import com.shampaggon.crackshot.CSDirector;
 import com.shampaggon.crackshot.CSUtility;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -9,6 +10,7 @@ import net.azisaba.namechange.util.NameChangeProgress;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -86,7 +88,14 @@ public class NameChangeData {
     public boolean canUseThisData() {
         ItemStack item = getNewItemStack();
         Component newDisplayName = item.getItemMeta().displayName();
-        ItemStack prevItem = new CSUtility().generateWeapon(getPreviousWeaponID());
+        CSUtility util = new CSUtility();
+        ItemStack prevItem = util.generateWeapon(getPreviousWeaponID());
+        CSDirector CSD = (CSDirector) Bukkit.getPluginManager().getPlugin("CrackShot");
+        if(CSD != null) {
+            if (util.getHandle().parentlist.containsKey(CSD.getPureName(item.getItemMeta().getDisplayName()))) {
+                return true;
+            }
+        }
         if(newDisplayName == null || prevItem.getItemMeta().displayName() == null){
             return true;
         }
