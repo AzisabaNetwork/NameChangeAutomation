@@ -4,6 +4,7 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
+import net.azisaba.namechange.gui.pages.PageEditLore;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -22,5 +23,6 @@ public class ItemDeleteLore extends GuiItem {
         int line = ((e.getSlot() + 4) / 9);
         NameChangeData data = NameChangeAutomation.INSTANCE.getDataContainer().getNameChangeData(gui.player);
         data.getLore().remove(line - 1);
+        gui.openPage(new PageEditLore(gui));
     }
 }

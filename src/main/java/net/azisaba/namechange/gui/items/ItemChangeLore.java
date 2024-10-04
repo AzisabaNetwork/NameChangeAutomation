@@ -4,8 +4,8 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
-import net.azisaba.namechange.gui.NameChangeGUI;
 import net.azisaba.namechange.gui.pages.PageEditLore;
+import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -27,7 +27,7 @@ public class ItemChangeLore extends GuiItem {
         if(data == null){
             gui.player.sendMessage(ChatColor.RED + "先に銃をセットしてください！");
             gui.player.playSound(gui.player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
-            gui.player.openInventory(NameChangeAutomation.INSTANCE.getGuiDistributor().getGUI(NameChangeGUI.class).getInventory(gui.player));
+            gui.openPage(new PageNameChange(gui));
             return;
         }
         if (data.canUseThisData()) {
