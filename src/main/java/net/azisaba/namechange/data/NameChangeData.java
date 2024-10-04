@@ -45,11 +45,11 @@ public class NameChangeData {
         if (lockedNewWeaponID != null) {
             return lockedNewWeaponID;
         }
-        String newID = previousWeaponID + "_" + name;
+        String newID = "NC_" + previousWeaponID + "_" + name;
         int i = 1;
         while (new CSUtility().generateWeapon(newID) != null) {
             i++;
-            newID = previousWeaponID + "_" + name + "_" + i;
+            newID = "NC_" + previousWeaponID + "_" + name + "_" + i;
         }
 
         return newID;
