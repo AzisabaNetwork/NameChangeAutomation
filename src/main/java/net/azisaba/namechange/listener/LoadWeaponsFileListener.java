@@ -36,7 +36,8 @@ public class LoadWeaponsFileListener implements Listener {
         if (cmd.equalsIgnoreCase("/crackshot config reload")) {
         } else if (cmd.equalsIgnoreCase("/cs config reload")) {
         } else if (cmd.equalsIgnoreCase("/shot config reload")) {
-        } else {
+        } else if (cmd.equalsIgnoreCase("/cra config reload")) {
+        }else {
             return;
         }
 
@@ -65,7 +66,8 @@ public class LoadWeaponsFileListener implements Listener {
         if (e.getCommand().equalsIgnoreCase("crackshot config reload")) {
         } else if (e.getCommand().equalsIgnoreCase("cs config reload")) {
         } else if (e.getCommand().equalsIgnoreCase("shot config reload")) {
-        } else {
+        } else if (e.getCommand().equalsIgnoreCase("cra config reload")) {
+        }else {
             return;
         }
 

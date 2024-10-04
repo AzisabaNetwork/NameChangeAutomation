@@ -1,10 +1,13 @@
 package net.azisaba.namechange.listener;
 
+import com.shampaggon.crackshot.CSDirector;
 import com.shampaggon.crackshot.CSUtility;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.WaitingAcceptData;
+import net.azisaba.namechange.task.CSPReloadTask;
 import net.azisaba.namechange.utils.Chat;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -15,6 +18,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -97,6 +101,9 @@ public class PaperClickListener implements Listener {
             p.sendMessage(ChatColor.RED + "利き手に紙を持って右クリックしてください。");
             return;
         }
+
+
+        new CSPReloadTask().runTaskLater(plugin,20);
 
         p.getInventory().setItemInMainHand(weapon);
         p.sendMessage(Chat.f("&a武器を交換しました！"));
