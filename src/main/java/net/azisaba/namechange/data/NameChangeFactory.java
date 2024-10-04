@@ -104,6 +104,46 @@ public class NameChangeFactory {
         }
     }
 
+    public FactoryResponse executeForLeonCSAddon(NameChangeData data){
+        File previousFile = null;
+        File file = new File("./plugins/LeonCSAddon/weapons/CSA_NAME_CHANGE.yml");
+        File csaFolder = new File("./plugins/LeonCSAddon/weapons/");
+        if (!csaFolder.exists()) {
+            return new FactoryResponse(FactoryResponse.FactoryStatus.NO_NEED, null);
+        }
+        for (File file2 : Objects.requireNonNull(csaFolder.listFiles(pathname -> {
+            String fileName = pathname.getName().toLowerCase(Locale.ROOT);
+            return fileName.endsWith(".yml") || fileName.endsWith(".yaml");
+        }))) {
+            YamlConfiguration conf2 = YamlConfiguration.loadConfiguration(file2);
+            ConfigurationSection sec2 = conf2.getConfigurationSection("");
+            if (sec2 == null) {
+                continue;
+            }
+            if (sec2.getKeys(false).contains(data.getPreviousWeaponID())) {
+                previousFile = file2;
+                break;
+            }
+        }
+
+        if (previousFile == null) {
+            data.setProgress(NameChangeProgress.SUCCESS);
+            return new FactoryResponse(FactoryResponse.FactoryStatus.NO_NEED, null);
+        }
+
+        YamlConfiguration csaPreviousConf = YamlConfiguration.loadConfiguration(previousFile);
+        YamlConfiguration csaConf = YamlConfiguration.loadConfiguration(file);
+        csaConf.set(data.getNewWeaponID(), csaPreviousConf.getConfigurationSection(data.getPreviousWeaponID()));
+
+        try {
+            csaConf.save(file);
+            return new FactoryResponse(FactoryResponse.FactoryStatus.SUCCESS, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new FactoryResponse(FactoryResponse.FactoryStatus.FAIL, null);
+        }
+    }
+
     //GSRを使わなくなったため未使用
     public FactoryResponse executeForGunScopeRecoil(NameChangeData data) {
         File file = new File("./plugins/GunScopeandRecoil/config_utf-8.yml");

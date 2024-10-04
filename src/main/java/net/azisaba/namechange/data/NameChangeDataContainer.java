@@ -55,6 +55,12 @@ public class NameChangeDataContainer {
             return null;
         }
 
+        FactoryResponse leonCSAddonResponse = factory.executeForLeonCSAddon(data);
+        if (leonCSAddonResponse.getStatus() == FactoryResponse.FactoryStatus.FAIL) {
+            data.setProgress(NameChangeProgress.FAIL);
+            return null;
+        }
+
         //FactoryResponse gsrResponse = factory.executeForGunScopeRecoil(data);
         //if (gsrResponse.getStatus() == FactoryResponse.FactoryStatus.FAIL) {
         //    data.setProgress(NameChangeProgress.FAIL);
