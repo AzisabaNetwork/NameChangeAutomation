@@ -122,6 +122,7 @@ public class NameChangeAutomation extends JavaPlugin {
                 continue;
             }
             if (file.getName().toLowerCase().endsWith(".yml") || file.getName().toLowerCase().endsWith(".yaml")) {
+                plugin.fillHashMaps(YamlConfiguration.loadConfiguration(file));
                 YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
 
                 // トップレベルのキーを取得してループ処理
