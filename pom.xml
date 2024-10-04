@@ -4,7 +4,7 @@
 
     <groupId>net.azisaba</groupId>
     <artifactId>NameChangeAutomation</artifactId>
-    <version>1.0.2</version>
+    <version>2.0.0</version>
 
     <name>${project.artifactId}</name>
     <description>Automate name change.</description>

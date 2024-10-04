@@ -2,7 +2,6 @@ package net.azisaba.namechange.data;
 
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
-import net.azisaba.namechange.gui.NameChangeGUI;
 import net.azisaba.namechange.util.FactoryResponse;
 import net.azisaba.namechange.util.NameChangeProgress;
 import net.azisaba.namechange.utils.FileNameUtils;
@@ -34,7 +33,6 @@ public class NameChangeDataContainer {
 
     public void unregisterNameChangeData(Player p) {
         nameChangeDataMap.remove(p.getUniqueId());
-        ((NameChangeGUI) plugin.getGuiDistributor().getGUI(NameChangeGUI.class)).deleteInventoryCache(p);
     }
 
     public WaitingAcceptData generateWeaponFile(NameChangeData data) {

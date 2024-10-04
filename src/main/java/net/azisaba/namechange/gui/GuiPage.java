@@ -1,6 +1,7 @@
 package net.azisaba.namechange.gui;
 
 import net.azisaba.namechange.NameChangeAutomation;
+import net.azisaba.namechange.listener.GuiListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;

@@ -8,14 +8,8 @@ import net.azisaba.namechange.config.PluginConfig;
 import net.azisaba.namechange.data.AcceptQueueWeapons;
 import net.azisaba.namechange.data.DenyWeapons;
 import net.azisaba.namechange.data.NameChangeDataContainer;
-import net.azisaba.namechange.gui.AcceptNameChangeGUI;
-import net.azisaba.namechange.gui.EditLoreGUI;
-import net.azisaba.namechange.gui.LastConfirmationGUI;
-import net.azisaba.namechange.gui.NameChangeGUI;
-import net.azisaba.namechange.gui.core.ClickableGUIDistributor;
 import net.azisaba.namechange.listener.*;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -29,7 +23,6 @@ public class NameChangeAutomation extends JavaPlugin {
 
     public static NameChangeAutomation INSTANCE;
 
-    private ClickableGUIDistributor guiDistributor;
     private NameChangeDataContainer dataContainer;
     private AcceptQueueWeapons acceptQueueWeapons;
     private DenyWeapons denyWeapons;
@@ -49,12 +42,6 @@ public class NameChangeAutomation extends JavaPlugin {
         dataContainer = new NameChangeDataContainer(this, new File(getDataFolder(), "NameChangeData"));
         chatReader = new ChatReader(this);
 
-        guiDistributor = new ClickableGUIDistributor();
-        guiDistributor.registerClickableGUI(new NameChangeGUI(this));
-        guiDistributor.registerClickableGUI(new EditLoreGUI(this));
-        guiDistributor.registerClickableGUI(new LastConfirmationGUI(this));
-        guiDistributor.registerClickableGUI(new AcceptNameChangeGUI(this));
-
         acceptQueueWeapons = new AcceptQueueWeapons(this);
         acceptQueueWeapons.load();
 
@@ -62,9 +49,7 @@ public class NameChangeAutomation extends JavaPlugin {
         denyWeapons.load();
 
         Bukkit.getPluginManager().registerEvents(new ItemClickListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new ClickableGUIListener(guiDistributor), this);
         Bukkit.getPluginManager().registerEvents(new LoadWeaponsFileListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new GUIUpdateListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ChatListener(this), this);
         Bukkit.getPluginManager().registerEvents(new JoinListener(dataContainer), this);
         Bukkit.getPluginManager().registerEvents(new PaperClickListener(this), this);
@@ -85,9 +70,6 @@ public class NameChangeAutomation extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (guiDistributor != null) {
-            guiDistributor.closeAllInventories();
-        }
         if (dataContainer != null)
             dataContainer.save();
         if (acceptQueueWeapons != null)

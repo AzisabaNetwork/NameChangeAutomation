@@ -90,6 +90,12 @@ public class PaperClickListener implements Listener {
         }
 
         ItemStack weapon = new CSUtility().generateWeapon(id);
+        WaitingAcceptData data = plugin.getAcceptQueueWeapons().getWaitingData(id);
+        ItemMeta meta = weapon.getItemMeta();
+        if(data != null) {
+            meta.setCustomModelData(data.getCustomModelData());
+        }
+        weapon.setItemMeta(meta);
         if (weapon == null) {
             p.sendMessage(ChatColor.RED + "エラーが発生しました (武器が存在しません)");
             p.sendMessage(ChatColor.RED + "武器ID: " + ChatColor.YELLOW + id);
@@ -103,7 +109,7 @@ public class PaperClickListener implements Listener {
         }
 
 
-        new CSPReloadTask().runTaskLater(plugin,20);
+        new CSPReloadTask().runTask(plugin);
 
         p.getInventory().setItemInMainHand(weapon);
         p.sendMessage(Chat.f("&a武器を交換しました！"));

@@ -1,7 +1,7 @@
 name: ${project.name}
 main: net.azisaba.namechange.NameChangeAutomation
 version: ${project.version}
-author: siloneco
+author: siloneco,Arisa9006,matsu1213
 description: ${project.description}
 website: ${project.url}
 depend: ["CrackShot"]

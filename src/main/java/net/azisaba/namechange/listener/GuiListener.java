@@ -1,9 +1,11 @@
-package net.azisaba.namechange.gui;
+package net.azisaba.namechange.listener;
 
 import com.shampaggon.crackshot.CSDirector;
 import com.shampaggon.crackshot.CSUtility;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
+import net.azisaba.namechange.gui.GuiItem;
+import net.azisaba.namechange.gui.GuiPage;
 import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
 import net.kyori.adventure.text.Component;
