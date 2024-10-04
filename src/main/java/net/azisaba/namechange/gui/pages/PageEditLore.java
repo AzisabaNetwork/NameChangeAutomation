@@ -46,7 +46,7 @@ public class PageEditLore extends GuiPage {
                     this.setItem((line * 9) + 3, new ItemMoveToUp(gui,line));
                 if (line != 5)
                     this.setItem((line * 9) + 4, new ItemMoveToDown(gui,line));
-                this.setItem((line * 9) + 5, new ItemDeleteLore(gui));
+                this.setItem((line * 9) + 5, new ItemDeleteLore(gui,line));
             } else {
                 int deleteItemSlot = (line * 9) + 4 - 9;
                 if (deleteItemSlot >= 0) {

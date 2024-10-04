@@ -15,13 +15,14 @@ import net.azisaba.namechange.gui.NameChangeGUI;
 import net.azisaba.namechange.gui.core.ClickableGUIDistributor;
 import net.azisaba.namechange.listener.*;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.Locale;
+import java.util.*;
 
 @Getter
 public class NameChangeAutomation extends JavaPlugin {
@@ -33,6 +34,8 @@ public class NameChangeAutomation extends JavaPlugin {
     private AcceptQueueWeapons acceptQueueWeapons;
     private DenyWeapons denyWeapons;
     private ChatReader chatReader;
+
+    public static Set<String> namedWeaponDisplayName = new HashSet<>();
 
     private PluginConfig pluginConfig;
 
@@ -119,8 +122,36 @@ public class NameChangeAutomation extends JavaPlugin {
                 continue;
             }
             if (file.getName().toLowerCase().endsWith(".yml") || file.getName().toLowerCase().endsWith(".yaml")) {
-                plugin.fillHashMaps(YamlConfiguration.loadConfiguration(file));
+                YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
+
+                // トップレベルのキーを取得してループ処理
+                Set<String> topLevelKeys = conf.getKeys(false);
+                for (String key : topLevelKeys) {
+                    // "Item_Information.Item_Name" のキーから値を取得し、リストに追加
+                    String itemName = conf.getString(key + ".Item_Information.Item_Name");
+                    if (itemName != null) {
+                        namedWeaponDisplayName.add(itemName);
+                    }
+                }
             }
         }
     }
+
+    public static Set<String> getNamedWeaponDisplayName (){
+        Set<String> conversionDisplayName = new HashSet<>();
+        Iterator<String> iterator = NameChangeAutomation.namedWeaponDisplayName.iterator();
+        CSDirector CSD = (CSDirector) Bukkit.getPluginManager().getPlugin("CrackShot");
+
+        while(iterator.hasNext()){
+            if(CSD == null){
+                return null;
+            }
+            conversionDisplayName.add(CSD.toDisplayForm(iterator.next()));
+        }
+
+        return conversionDisplayName;
+    }
+
 }
+
+

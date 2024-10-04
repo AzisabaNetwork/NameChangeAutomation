@@ -1,5 +1,6 @@
 package net.azisaba.namechange.gui.items;
 
+import com.shampaggon.crackshot.CSDirector;
 import com.shampaggon.crackshot.CSUtility;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
@@ -11,6 +12,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -35,6 +37,7 @@ public class ItemComplete extends GuiItem {
             gui.player.closeInventory();
             return;
         }
+
         gui.openPage(new PageLastConfirmation(gui,data));
     }
 }

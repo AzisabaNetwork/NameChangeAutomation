@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.util.NameChangeProgress;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -14,8 +15,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,6 +32,7 @@ public class NameChangeData {
 
     private String previousWeaponID;
 
+    @Getter
     private String displayName;
     private int customModelData;
     private List<String> lore = new ArrayList<>();
@@ -92,9 +96,15 @@ public class NameChangeData {
         ItemStack prevItem = util.generateWeapon(getPreviousWeaponID());
         CSDirector CSD = (CSDirector) Bukkit.getPluginManager().getPlugin("CrackShot");
         if(CSD != null) {
+
             if (util.getHandle().parentlist.containsKey(CSD.getPureName(item.getItemMeta().getDisplayName()))) {
                 return true;
             }
+
+            if(NameChangeAutomation.getNamedWeaponDisplayName().contains(getDisplayName())){
+                return true;
+            }
+
         }
         if(newDisplayName == null || prevItem.getItemMeta().displayName() == null){
             return true;
@@ -131,6 +141,7 @@ public class NameChangeData {
                 .map(Component::text)
                 .collect(Collectors.toList());
     }
+
 }
 
 

@@ -166,6 +166,7 @@ public class NameChangeGUI extends ClickableGUI {
         }
         if (item.isSimilar(completeItem)) {
             if (!data.canUseThisData()) {
+
                 p.sendMessage(Chat.f("&aこのデータでは、他の銃と見分けがつきません！"));
                 p.sendMessage(Chat.f("&eアイテム名を変更してください。"));
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
