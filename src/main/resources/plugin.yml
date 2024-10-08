@@ -9,6 +9,8 @@ api-version: 1.16
 commands:
   namechange:
     permission: namechangeautomation.command.namechange
+  namechangereload:
+    permission: namechangeautomation.command.namechange
 permissions:
   namechangeautomation.command.namechange:
     default: op

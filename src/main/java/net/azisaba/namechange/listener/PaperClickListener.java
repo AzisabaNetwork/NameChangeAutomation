@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -114,6 +115,8 @@ public class PaperClickListener implements Listener {
         p.getInventory().setItemInMainHand(weapon);
         p.sendMessage(Chat.f("&a武器を交換しました！"));
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+        Bukkit.dispatchCommand(console, "syncomma cspreload");
     }
 
     private int getEmptySlots(Player p) {
