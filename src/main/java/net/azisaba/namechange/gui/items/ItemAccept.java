@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -44,6 +45,11 @@ public class ItemAccept extends GuiItem {
         data.setAbleToDelete(true);
         gui.player.sendMessage(Chat.f("&a銃データの使用を許可しました"));
         data.setCompleted();
+
+        Player namedplayer = Bukkit.getPlayer(data.getAuthorUUID());
+        if(namedplayer != null){
+            namedplayer.sendMessage("ネームドの申請が許可されました");
+        }
 
         Bukkit.getScheduler().runTaskLater(NameChangeAutomation.INSTANCE, () -> {
             WaitingAcceptData data2 = NameChangeAutomation.INSTANCE.getAcceptQueueWeapons().nextAcceptWeapon();
