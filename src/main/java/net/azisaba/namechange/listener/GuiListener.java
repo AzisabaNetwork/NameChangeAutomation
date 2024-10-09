@@ -23,6 +23,10 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
 public class GuiListener implements Listener {
 
     private final GuiPage page;
@@ -74,12 +78,13 @@ public class GuiListener implements Listener {
             String id = csUtility.getWeaponTitle(item2);
             CSDirector director = (CSDirector) Bukkit.getPluginManager().getPlugin("CrackShot");
             String inventoryControl = director.getString(id + ".Item_Information.Inventory_Control");
+            List<String> inventoryControlList = Arrays.asList(inventoryControl.split(","));
 
-            if (inventoryControl == null) {
+            if (inventoryControlList.isEmpty()) {
                 return;
             }
             if (e.getView().getTopInventory().getItem(11) == null || e.getView().getTopInventory().getItem(11).getType() == Material.AIR) {
-                if (!NameChangeAutomation.INSTANCE.getPluginConfig().getNameChangeable().contains(inventoryControl)) {
+                if (!new HashSet<>(NameChangeAutomation.INSTANCE.getPluginConfig().getNameChangeable()).containsAll(inventoryControlList)) {
                     p.sendMessage(Chat.f("&cこのアイテムは名前変更できません！"));
                     p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                     return;
