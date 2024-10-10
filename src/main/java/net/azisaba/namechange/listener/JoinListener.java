@@ -31,6 +31,7 @@ public class JoinListener implements Listener {
                 if (player.hasPermission("namechangeautomation.command.namechange")) {
                     TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&',"&a[Admin Message]:&6ネームド申請が保留中です &2[クリックでGUIを開く]"));
                     message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/namechange"));
+                    p.sendMessage(message);
                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
                 }
             }
