@@ -29,9 +29,7 @@ public class JoinListener implements Listener {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 // 運営にネームド追加を通知する (試合鯖にいる人にも通知出来たらしたい)
                 if (player.hasPermission("namechangeautomation.command.namechange")) {
-                    TextComponent message = new TextComponent(ChatColor.translateAlternateColorCodes('&',"&a[Admin Message]:&6ネームド申請が保留中です &2[クリックでGUIを開く]"));
-                    message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/namechange"));
-                    p.sendMessage(message);
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&',"&a[Admin Message]:&6ネームド申請が保留中です"));
                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
                 }
             }

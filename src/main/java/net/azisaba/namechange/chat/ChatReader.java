@@ -59,6 +59,10 @@ public class ChatReader {
             plugin.getDataContainer().getNameChangeData(p).receiveLoreChat(msg);
             InventoryGui gui = new InventoryGui(p);
             gui.openPage(new PageEditLore(gui));
+        } else if (type == ChatContentType.LOREEX) {
+            plugin.getDataContainer().getNameChangeData(p).receiveLoreChatCS(msg);
+            InventoryGui gui = new InventoryGui(p);
+            gui.openPage(new PageEditLore(gui));
         }
 
         contentTypes.remove(p.getUniqueId());

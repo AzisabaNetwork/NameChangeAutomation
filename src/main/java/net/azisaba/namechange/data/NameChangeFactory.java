@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import net.azisaba.namechange.util.FactoryResponse;
 import net.azisaba.namechange.util.NameChangeProgress;
 import net.azisaba.namechange.utils.FileNameUtils;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 public class NameChangeFactory {
@@ -52,7 +54,10 @@ public class NameChangeFactory {
             conf.set(data.getNewWeaponID() + ".Item_Information.Item_Name", data.getDisplayName());
         }
         if (data.getLore() != null && !data.getLore().isEmpty()) {
-            conf.set(data.getNewWeaponID() + ".Item_Information.Item_Lore", String.join("|", data.getLore()));
+            List<String> stringLore = data.getLore().stream()
+                            .map(c -> LegacyComponentSerializer.legacyAmpersand().serialize(c))
+                                    .collect(Collectors.toList());
+            conf.set(data.getNewWeaponID() + ".Item_Information.Item_Lore", String.join("|", stringLore));
         }
         conf.set(data.getNewWeaponID() + ".Crafting.Enable", false);
         try {

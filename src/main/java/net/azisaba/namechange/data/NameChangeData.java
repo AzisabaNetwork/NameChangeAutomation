@@ -35,7 +35,7 @@ public class NameChangeData {
     @Getter
     private String displayName;
     private int customModelData;
-    private List<String> lore = new ArrayList<>();
+    private List<Component> lore = new ArrayList<>();
 
     @Getter(value = AccessLevel.PRIVATE)
     private int loreInput;
@@ -67,7 +67,7 @@ public class NameChangeData {
         lockedNewWeaponID = null;
     }
 
-    public void setLore(List<String> lore) {
+    public void setLore(List<Component> lore) {
         if (lore == null) {
             this.lore = new ArrayList<>();
         } else {
@@ -81,12 +81,26 @@ public class NameChangeData {
         }
 
         if (lore.size() <= loreInput) {
-            lore.add(msg);
+            String[] loreParts = msg.split("\\|");
+            for (String part : loreParts) {
+                lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',part)));
+            }
         } else {
-            lore.set(loreInput, msg);
+            String[] loreParts = msg.split("\\|");
+            for (String part : loreParts) {
+                lore.set(loreInput, Component.text(ChatColor.translateAlternateColorCodes('&',part)));
+            }
         }
 
         loreInput = -1;
+    }
+    public void receiveLoreChatCS(String msg) {
+        //CS形式(|で改行)の書式で一括入力用
+        lore.clear();
+        String[] loreParts = msg.split("\\|");
+        for (String part : loreParts) {
+            lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',part)));
+        }
     }
 
     public boolean canUseThisData() {
@@ -125,21 +139,9 @@ public class NameChangeData {
         //CMD設定
         meta.setCustomModelData(customModelData);
 
-        if (lore != null && !lore.isEmpty()) {
-            List<Component> translatedLore = lore.stream()
-                    .map(lore -> ChatColor.translateAlternateColorCodes('&', lore))
-                    .map(Component::text)
-                    .collect(Collectors.toList());
-            meta.lore(translatedLore);
-        }
+        meta.lore(lore);
         item.setItemMeta(meta);
         return item;
-    }
-    public List<Component> getComponentLore(){
-        return lore.stream()
-                .map(lore -> ChatColor.translateAlternateColorCodes('&', lore))
-                .map(Component::text)
-                .collect(Collectors.toList());
     }
 
 }

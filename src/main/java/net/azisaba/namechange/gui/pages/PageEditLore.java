@@ -6,6 +6,7 @@ import net.azisaba.namechange.gui.GuiPage;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.gui.items.*;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -25,13 +26,13 @@ public class PageEditLore extends GuiPage {
             ItemStack sign2 = new ItemStack(Material.OAK_SIGN);
             sign2.setAmount(line + 1);
             if (data != null) {
-                String lore = null;
+                Component lore = null;
                 if (data.getLore() != null && data.getLore().size() > line) {
                     lore = data.getLore().get(line);
                 }
                 if (lore != null) {
                     ItemMeta meta = sign2.getItemMeta();
-                    meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + ChatColor.translateAlternateColorCodes('&',lore));
+                    meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + ChatColor.translateAlternateColorCodes('&', LegacyComponentSerializer.legacyAmpersand().serialize(lore)));
                     sign2.setItemMeta(meta);
                     hasLine = true;
                 } else {
@@ -60,6 +61,7 @@ public class PageEditLore extends GuiPage {
         }
 
         this.setItem(43, new ItemLoreComplete(gui));
+        this.setItem(0, new ItemEditLoreCS(gui));
     }
 
     @Override

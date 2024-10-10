@@ -5,6 +5,9 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.util.FactoryResponse;
 import net.azisaba.namechange.util.NameChangeProgress;
 import net.azisaba.namechange.utils.FileNameUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -13,6 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class NameChangeDataContainer {
@@ -80,7 +84,10 @@ public class NameChangeDataContainer {
         UUID uuid = UUID.fromString(file.getName().substring(0, file.getName().indexOf(".")));
         String previousWeaponID = conf.getString("PreviousWeaponID");
         String displayName = conf.getString("DisplayName");
-        List<String> lore = conf.getStringList("Lore");
+        List<Component> lore = conf.getStringList("Lore").stream()
+                .map(text -> ChatColor.translateAlternateColorCodes('&', text))
+                .map(Component::text)
+                .collect(Collectors.toList());
         int custommodeldata = conf.getInt("CustomModelData");
 
         NameChangeData data = new NameChangeData(uuid, p.getName());
@@ -96,9 +103,13 @@ public class NameChangeDataContainer {
         for (NameChangeData data : nameChangeDataMap.values()) {
             YamlConfiguration conf = new YamlConfiguration();
 
+            List<String> stringLore = data.getLore().stream()
+                    .map(c -> LegacyComponentSerializer.legacyAmpersand().serialize(c))
+                    .collect(Collectors.toList());
+
             conf.set("PreviousWeaponID", data.getPreviousWeaponID());
             conf.set("DisplayName", data.getDisplayName());
-            conf.set("Lore", data.getLore());
+            conf.set("Lore", stringLore);
             conf.set("CustomModelData", data.getCustomModelData());
 
             try {
