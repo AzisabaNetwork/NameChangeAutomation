@@ -3,6 +3,7 @@ package net.azisaba.namechange.listener;
 import com.shampaggon.crackshot.CSDirector;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
+import net.azisaba.namechange.task.CSPReloadTask;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -22,9 +23,7 @@ public class LoadWeaponsFileListener implements Listener {
         if (!e.getPlugin().getName().equalsIgnoreCase("CrackShot")) {
             return;
         }
-        CSDirector director = (CSDirector) e.getPlugin();
-
-        plugin.loadNameChangeWeapons(director);
+        new CSPReloadTask().runTask(plugin);
     }
 
     @EventHandler
