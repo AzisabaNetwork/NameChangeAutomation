@@ -60,7 +60,18 @@ public class ChatReader {
             InventoryGui gui = new InventoryGui(p);
             gui.openPage(new PageEditLore(gui));
         } else if (type == ChatContentType.LOREEX) {
-            plugin.getDataContainer().getNameChangeData(p).receiveLoreChatCS(msg);
+            plugin.getDataContainer().getNameChangeData(p).receiveLoreChatCS(msg,true);
+            InventoryGui gui = new InventoryGui(p);
+            gui.openPage(new PageEditLore(gui));
+        }else if (type == ChatContentType.LOREEXADD) {
+            plugin.getDataContainer().getNameChangeData(p).receiveLoreChatCS(msg,false);
+            InventoryGui gui = new InventoryGui(p);
+            gui.openPage(new PageEditLore(gui));
+        }else if (type == ChatContentType.LOREEXREMOVE) {
+            boolean success = plugin.getDataContainer().getNameChangeData(p).receiveLoreChatDeleteCS(msg);
+            if (success != true) {
+                p.sendMessage(Chat.f("&c指定された行は存在しません"));
+            }
             InventoryGui gui = new InventoryGui(p);
             gui.openPage(new PageEditLore(gui));
         }

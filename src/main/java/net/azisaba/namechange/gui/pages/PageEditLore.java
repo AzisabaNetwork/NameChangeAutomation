@@ -61,7 +61,9 @@ public class PageEditLore extends GuiPage {
         }
 
         this.setItem(43, new ItemLoreComplete(gui));
-        this.setItem(0, new ItemEditLoreCS(gui));
+        this.setItem(0, new ItemEditLoreCS(gui, 0));
+        this.setItem(9, new ItemEditLoreCS(gui, 9));
+        this.setItem(18, new ItemEditLoreCS(gui, 18));
     }
 
     @Override

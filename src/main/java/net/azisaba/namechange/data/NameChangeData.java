@@ -94,14 +94,37 @@ public class NameChangeData {
 
         loreInput = -1;
     }
-    public void receiveLoreChatCS(String msg) {
+    public void receiveLoreChatCS(String msg, Boolean clear) {
         //CS形式(|で改行)の書式で一括入力用
-        lore.clear();
+        if(clear == true) {
+            lore.clear();
+        }
         String[] loreParts = msg.split("\\|");
         for (String part : loreParts) {
             lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',part)));
         }
     }
+
+    public boolean receiveLoreChatDeleteCS(String msg) {
+        //指定された行の削除
+        String stringNumber = msg.replaceAll("[^0-9]", "");
+        int number;
+        try {
+            number = Integer.parseInt(stringNumber)-1;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        if(lore.size() < number){
+            return false;
+        }
+        if(number < 0){
+            return false;
+        }
+
+        lore.remove(number);
+        return true;
+    }
+
 
     public boolean canUseThisData() {
         ItemStack item = getNewItemStack();
