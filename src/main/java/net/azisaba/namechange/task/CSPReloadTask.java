@@ -13,6 +13,7 @@ public class CSPReloadTask extends BukkitRunnable {
     public void run(){
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
         Bukkit.dispatchCommand(console, "crackshotplus reload");
+        Bukkit.dispatchCommand(console, "aug reload");
 
         Plugin cs = Bukkit.getPluginManager().getPlugin("CrackShot");
         if (cs == null) {
