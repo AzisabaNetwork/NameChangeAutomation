@@ -4,7 +4,7 @@ version: ${project.version}
 author: siloneco,Arisa9006,matsu1213
 description: ${project.description}
 website: ${project.url}
-depend: ["CrackShot"]
+depend: ["CrackShot", "CrackShotPlus", "LeonCSAddon"]
 api-version: 1.16
 commands:
   namechange:
