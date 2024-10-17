@@ -63,6 +63,12 @@ public class NameChangeDataContainer {
             return null;
         }
 
+        FactoryResponse agetarouUniqueGunsResponse = factory.executeForAgetarouUniqueGuns(data);
+        if (agetarouUniqueGunsResponse.getStatus() == FactoryResponse.FactoryStatus.FAIL) {
+            data.setProgress(NameChangeProgress.FAIL);
+            return null;
+        }
+
         //FactoryResponse gsrResponse = factory.executeForGunScopeRecoil(data);
         //if (gsrResponse.getStatus() == FactoryResponse.FactoryStatus.FAIL) {
         //    data.setProgress(NameChangeProgress.FAIL);
