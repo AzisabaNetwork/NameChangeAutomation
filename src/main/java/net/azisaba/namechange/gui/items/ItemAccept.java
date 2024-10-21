@@ -43,6 +43,7 @@ public class ItemAccept extends GuiItem {
         }
 
         data.setAbleToDelete(true);
+        data.setApprover((Player) e.getWhoClicked());
         gui.player.sendMessage(Chat.f("&a銃データの使用を許可しました"));
         data.setCompleted();
 
