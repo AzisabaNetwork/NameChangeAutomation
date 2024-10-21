@@ -14,9 +14,15 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ItemAccept extends GuiItem {
 
@@ -48,6 +54,7 @@ public class ItemAccept extends GuiItem {
         data.setCompleted();
 
         Player namedplayer = Bukkit.getPlayer(data.getAuthorUUID());
+        save();
         if(namedplayer != null){
             namedplayer.sendMessage("ネームドの申請が許可されました");
         }
@@ -59,5 +66,32 @@ public class ItemAccept extends GuiItem {
             }
             gui.openPage(new PageAcceptChange(gui, data2));
         }, 5);
+    }
+
+    public void save() {
+        Map<String, Object> parentsnode = new HashMap<>();
+        Map<String, Object> namedInfo = new HashMap<>();
+        namedInfo.put("PreviousID",data.getPreviousID());
+        namedInfo.put("AuthorName",data.getAuthorName());
+        namedInfo.put("AuthorUUID",data.getAuthorUUID());
+        namedInfo.put("ApproverName",data.getApproverName());
+        namedInfo.put("ApproverUUID",data.getApproverUUID());
+        namedInfo.put("Custom_Model_Data",data.getCustomModelData());
+        parentsnode.put(data.getNewID(),namedInfo);
+
+        DumperOptions options = new DumperOptions();
+        options.setIndent(2); // インデントの幅を設定
+        options.setPrettyFlow(true); // 読みやすいフォーマットで出力する設定
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK); // ブロックスタイルを使用
+
+        // YAMLオブジェクトを作成
+        Yaml yaml = new Yaml(options);
+
+        // YAMLファイルを書き込む
+        try (FileWriter writer = new FileWriter("NamedWeaponInfo.yml")) {
+            yaml.dump(parentsnode, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
