@@ -11,12 +11,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,27 +71,29 @@ public class ItemAccept extends GuiItem {
     }
 
     public void save() {
-        Map<String, Object> parentsnode = new HashMap<>();
-        Map<String, Object> namedInfo = new HashMap<>();
-        namedInfo.put("PreviousID",data.getPreviousID());
-        namedInfo.put("AuthorName",data.getAuthorName());
-        namedInfo.put("AuthorUUID",data.getAuthorUUID());
-        namedInfo.put("ApproverName",data.getApproverName());
-        namedInfo.put("ApproverUUID",data.getApproverUUID());
-        namedInfo.put("Custom_Model_Data",data.getCustomModelData());
-        parentsnode.put(data.getNewID(),namedInfo);
+        File dataFolder = NameChangeAutomation.INSTANCE.getDataFolder();
+        File yamlFile = new File(dataFolder, "NamedWeaponInfo.yml");
+        if (!yamlFile.exists()) {
+            try {
+                yamlFile.createNewFile(); // 新規ファイルを生成
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        YamlConfiguration namedInfo = YamlConfiguration.loadConfiguration(yamlFile);
 
-        DumperOptions options = new DumperOptions();
-        options.setIndent(2); // インデントの幅を設定
-        options.setPrettyFlow(true); // 読みやすいフォーマットで出力する設定
-        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK); // ブロックスタイルを使用
+        //データ入力
+        namedInfo.set(data.getNewID() + ".PreviousID", data.getPreviousID());
+        namedInfo.set(data.getNewID() + ".AuthorName", data.getAuthorName());
+        namedInfo.set(data.getNewID() + ".AuthorUUID", data.getAuthorUUID().toString());
+        namedInfo.set(data.getNewID() + ".ApproverName", data.getApproverName());
+        namedInfo.set(data.getNewID() + ".ApproverUUID", data.getApproverUUID().toString());
+        namedInfo.set(data.getNewID() + ".Custom_Model_Data", data.getCustomModelData());
 
-        // YAMLオブジェクトを作成
-        Yaml yaml = new Yaml(options);
 
         // YAMLファイルを書き込む
-        try (FileWriter writer = new FileWriter("NamedWeaponInfo.yml")) {
-            yaml.dump(parentsnode, writer);
+        try {
+            namedInfo.save(yamlFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
