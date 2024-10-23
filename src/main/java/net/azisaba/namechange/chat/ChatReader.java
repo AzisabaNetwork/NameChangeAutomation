@@ -12,8 +12,10 @@ import net.azisaba.namechange.gui.pages.PageEditNameInfo;
 import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -82,26 +84,47 @@ public class ChatReader {
         }else if(type == ChatContentType.AUTHOR_PLAYER_NAME) {
             InventoryGui gui = new InventoryGui(p);
             String node = new CSUtility().getWeaponTitle(p.getInventory().getItemInMainHand());
-            Player author = Bukkit.getPlayer(msg);
-            if(author == null){
-                p.sendMessage(Chat.f("&c指定されたプレイヤーは存在しません!!"));
+            OfflinePlayer author = Bukkit.getOfflinePlayer(msg);
+            if(node != null) {
+                if (author == null) {
+                    p.sendMessage(Chat.f("&c指定されたプレイヤーは存在しません!!"));
+                } else {
+                    new NameChangeInfoIO().saveAuthor(node, author);
+                }
             }else {
-                new NameChangeInfoIO().saveAuthor(node,author);
+                p.sendMessage("武器を手に持って実行してください" + node);
             }
             NameChangeInfoData data = new NameChangeInfoIO().load(node);
             gui.openPage(new PageEditNameInfo(gui,node,data));
         }else if(type == ChatContentType.APPROVER_PLAYER_NAME) {
             InventoryGui gui = new InventoryGui(p);
             String node = new CSUtility().getWeaponTitle(p.getInventory().getItemInMainHand());
-            Player approver = Bukkit.getPlayer(msg);
-            if(approver == null){
-                p.sendMessage(Chat.f("&c指定されたプレイヤーは存在しません!!"));
-            }else {
-                new NameChangeInfoIO().saveApprover(node,approver);
+            OfflinePlayer approver = Bukkit.getOfflinePlayer(msg);
+            if(node != null) {
+                if (approver == null) {
+                    p.sendMessage(Chat.f("&c指定されたプレイヤーは存在しません!!"));
+                } else {
+                    new NameChangeInfoIO().saveApprover(node, approver);
+                }
+            } else {
+                p.sendMessage("武器を手に持って実行してください" + node);
             }
 
             NameChangeInfoData data = new NameChangeInfoIO().load(node);
             gui.openPage(new PageEditNameInfo(gui,node,data));
+
+        }else if(type == ChatContentType.BASE_WEAPON) {
+            InventoryGui gui = new InventoryGui(p);
+            String node = new CSUtility().getWeaponTitle(p.getInventory().getItemInMainHand());
+            ItemStack baseWeapon = new CSUtility().generateWeapon(msg);
+            if(baseWeapon == null){
+                p.sendMessage(Chat.f("&c指定された武器は存在しません!!"));
+            }else {
+                new NameChangeInfoIO().saveBaseWeapon(node, msg);
+            }
+            NameChangeInfoData data = new NameChangeInfoIO().load(node);
+            gui.openPage(new PageEditNameInfo(gui,node,data));
+
         }else if(type == ChatContentType.NUMBER) {
             InventoryGui gui = new InventoryGui(p);
             String node = new CSUtility().getWeaponTitle(p.getInventory().getItemInMainHand());

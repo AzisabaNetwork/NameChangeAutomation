@@ -4,6 +4,7 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.data.NameChangeInfoData;
 import net.azisaba.namechange.data.WaitingAcceptData;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -89,7 +90,20 @@ public class NameChangeInfoIO {
         }
     }
 
-    public void saveApprover(String weaponNodeName, Player author) {
+    public void saveBaseWeapon(String weaponNodeName, String baseWeaponNodeName) {
+        File yamlFile = new File(nameChangeInfoFolder, weaponNodeName + ".yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(yamlFile);
+
+        config.set(weaponNodeName + ".PreviousID", baseWeaponNodeName);
+
+        try {
+            config.save(yamlFile);  // ファイルに書き込む
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveApprover(String weaponNodeName, OfflinePlayer author) {
         File yamlFile = new File(nameChangeInfoFolder, weaponNodeName + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(yamlFile);
 
@@ -116,7 +130,7 @@ public class NameChangeInfoIO {
         }
     }
 
-    public void saveAuthor(String weaponNodeName, Player author) {
+    public void saveAuthor(String weaponNodeName, OfflinePlayer author) {
         File yamlFile = new File(nameChangeInfoFolder, weaponNodeName + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(yamlFile);
 

@@ -18,16 +18,18 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ItemNIApprover extends GuiItem {
     NameChangeInfoData data;
     public ItemNIApprover(InventoryGui gui, String weaponNode,NameChangeInfoData data) {
         super(gui, new ItemStack(Material.PLAYER_HEAD));
         this.data = data;
-
-        SkullMeta skullMeta = (SkullMeta) this.itemStack.getItemMeta();
-        skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(data.getApproverUUID()));
-        this.itemStack.setItemMeta(skullMeta);
+        if(!data.getApproverUUID().equals("N/A")){
+            SkullMeta skullMeta = (SkullMeta) this.itemStack.getItemMeta();
+            skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(data.getApproverUUID())));
+            this.itemStack.setItemMeta(skullMeta);
+        }
         this.setDisplayName(Chat.f("&6承認者"));
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(Chat.f("PlayerName:" + data.getApproverName())));

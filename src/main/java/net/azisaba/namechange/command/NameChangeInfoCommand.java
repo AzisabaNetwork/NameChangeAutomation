@@ -22,6 +22,10 @@ public class NameChangeInfoCommand implements CommandExecutor {
         }
         Player p = (Player) sender;
         String weaponNode = new CSUtility().getWeaponTitle(p.getInventory().getItemInMainHand());
+        if(weaponNode == null){
+            sender.sendMessage(Chat.f("&6武器を手に持って実行してください"));
+            return true;
+        }
 
         NameChangeInfoData data = new NameChangeInfoIO().load(weaponNode);
         if(data == null){
@@ -30,7 +34,6 @@ public class NameChangeInfoCommand implements CommandExecutor {
 
         InventoryGui gui = new InventoryGui(p);
         gui.openPage(new PageEditNameInfo(gui,weaponNode,data));
-        p.sendMessage("コマンドを実行しました");
 
         return true;
     }
