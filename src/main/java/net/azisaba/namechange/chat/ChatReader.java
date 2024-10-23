@@ -1,12 +1,17 @@
 package net.azisaba.namechange.chat;
 
+import com.shampaggon.crackshot.CSUtility;
 import lombok.RequiredArgsConstructor;
 import me.rayzr522.jsonmessage.JSONMessage;
 import net.azisaba.namechange.NameChangeAutomation;
+import net.azisaba.namechange.config.NameChangeInfoIO;
+import net.azisaba.namechange.data.NameChangeInfoData;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.gui.pages.PageEditLore;
+import net.azisaba.namechange.gui.pages.PageEditNameInfo;
 import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -74,6 +79,38 @@ public class ChatReader {
             }
             InventoryGui gui = new InventoryGui(p);
             gui.openPage(new PageEditLore(gui));
+        }else if(type == ChatContentType.AUTHOR_PLAYER_NAME) {
+            InventoryGui gui = new InventoryGui(p);
+            String node = new CSUtility().getWeaponTitle(p.getInventory().getItemInMainHand());
+            Player author = Bukkit.getPlayer(msg);
+            if(author == null){
+                p.sendMessage(Chat.f("&c指定されたプレイヤーは存在しません!!"));
+            }else {
+                new NameChangeInfoIO().saveAuthor(node,author);
+            }
+            NameChangeInfoData data = new NameChangeInfoIO().load(node);
+            gui.openPage(new PageEditNameInfo(gui,node,data));
+        }else if(type == ChatContentType.APPROVER_PLAYER_NAME) {
+            InventoryGui gui = new InventoryGui(p);
+            String node = new CSUtility().getWeaponTitle(p.getInventory().getItemInMainHand());
+            Player approver = Bukkit.getPlayer(msg);
+            if(approver == null){
+                p.sendMessage(Chat.f("&c指定されたプレイヤーは存在しません!!"));
+            }else {
+                new NameChangeInfoIO().saveApprover(node,approver);
+            }
+
+            NameChangeInfoData data = new NameChangeInfoIO().load(node);
+            gui.openPage(new PageEditNameInfo(gui,node,data));
+        }else if(type == ChatContentType.NUMBER) {
+            InventoryGui gui = new InventoryGui(p);
+            String node = new CSUtility().getWeaponTitle(p.getInventory().getItemInMainHand());
+            String stringNumber = msg.replaceAll("[^0-9]", "");
+            if(stringNumber != null) {
+                new NameChangeInfoIO().saveCustomModelData(node, Integer.parseInt(stringNumber));
+            }
+            NameChangeInfoData data = new NameChangeInfoIO().load(node);
+            gui.openPage(new PageEditNameInfo(gui,node,data));
         }
 
         contentTypes.remove(p.getUniqueId());

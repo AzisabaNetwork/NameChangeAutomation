@@ -1,6 +1,7 @@
 package net.azisaba.namechange.gui.items;
 
 import net.azisaba.namechange.NameChangeAutomation;
+import net.azisaba.namechange.config.NameChangeInfoIO;
 import net.azisaba.namechange.data.WaitingAcceptData;
 import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
@@ -56,7 +57,8 @@ public class ItemAccept extends GuiItem {
         data.setCompleted();
 
         Player namedplayer = Bukkit.getPlayer(data.getAuthorUUID());
-        save();
+        NameChangeInfoIO nameinfo = new NameChangeInfoIO();
+        nameinfo.save(data);
         if(namedplayer != null){
             namedplayer.sendMessage("ネームドの申請が許可されました");
         }
@@ -68,34 +70,5 @@ public class ItemAccept extends GuiItem {
             }
             gui.openPage(new PageAcceptChange(gui, data2));
         }, 5);
-    }
-
-    public void save() {
-        File dataFolder = NameChangeAutomation.INSTANCE.getDataFolder();
-        File yamlFile = new File(dataFolder, "NamedWeaponInfo.yml");
-        if (!yamlFile.exists()) {
-            try {
-                yamlFile.createNewFile(); // 新規ファイルを生成
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        YamlConfiguration namedInfo = YamlConfiguration.loadConfiguration(yamlFile);
-
-        //データ入力
-        namedInfo.set(data.getNewID() + ".PreviousID", data.getPreviousID());
-        namedInfo.set(data.getNewID() + ".AuthorName", data.getAuthorName());
-        namedInfo.set(data.getNewID() + ".AuthorUUID", data.getAuthorUUID().toString());
-        namedInfo.set(data.getNewID() + ".ApproverName", data.getApproverName());
-        namedInfo.set(data.getNewID() + ".ApproverUUID", data.getApproverUUID().toString());
-        namedInfo.set(data.getNewID() + ".Custom_Model_Data", data.getCustomModelData());
-
-
-        // YAMLファイルを書き込む
-        try {
-            namedInfo.save(yamlFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

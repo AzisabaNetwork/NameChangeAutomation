@@ -4,6 +4,7 @@ import com.shampaggon.crackshot.CSDirector;
 import lombok.Getter;
 import net.azisaba.namechange.chat.ChatReader;
 import net.azisaba.namechange.command.NameChangeCommand;
+import net.azisaba.namechange.command.NameChangeInfoCommand;
 import net.azisaba.namechange.command.NameChangeReloadCommand;
 import net.azisaba.namechange.config.PluginConfig;
 import net.azisaba.namechange.data.AcceptQueueWeapons;
@@ -57,6 +58,7 @@ public class NameChangeAutomation extends JavaPlugin {
 
         Bukkit.getPluginCommand("namechange").setExecutor(new NameChangeCommand(this));
         Bukkit.getPluginCommand("namechangereload").setExecutor(new NameChangeReloadCommand(this));
+        Bukkit.getPluginCommand("namechangeinfo").setExecutor(new NameChangeInfoCommand());
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             dataContainer.loadData(p);

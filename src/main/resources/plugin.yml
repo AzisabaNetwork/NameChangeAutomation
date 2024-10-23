@@ -11,6 +11,8 @@ commands:
     permission: namechangeautomation.command.namechange
   namechangereload:
     permission: namechangeautomation.command.namechange
+  namechangeinfo:
+    permission: namechangeautomation.command.namechange
 permissions:
   namechangeautomation.command.namechange:
     default: op
