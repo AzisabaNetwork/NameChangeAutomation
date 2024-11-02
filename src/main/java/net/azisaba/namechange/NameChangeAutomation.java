@@ -6,6 +6,7 @@ import net.azisaba.namechange.chat.ChatReader;
 import net.azisaba.namechange.command.NameChangeCommand;
 import net.azisaba.namechange.command.NameChangeInfoCommand;
 import net.azisaba.namechange.command.NameChangeReloadCommand;
+import net.azisaba.namechange.config.NameChangeInfoIO;
 import net.azisaba.namechange.config.PluginConfig;
 import net.azisaba.namechange.data.AcceptQueueWeapons;
 import net.azisaba.namechange.data.DenyWeapons;
@@ -91,6 +92,10 @@ public class NameChangeAutomation extends JavaPlugin {
         loadWeapons(plugin, nameChangeDirectory);
 
         plugin.csminion.completeList();
+    }
+
+    public NameChangeInfoIO getNameChangeInfoIO() {
+        return new NameChangeInfoIO();
     }
 
     public void loadWeapons(CSDirector plugin, File directory) {
