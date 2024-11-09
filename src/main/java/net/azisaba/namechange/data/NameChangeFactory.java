@@ -151,8 +151,9 @@ public class NameChangeFactory {
 
     public FactoryResponse executeForAgetarouUniqueGuns(NameChangeData data){
         File previousFile = null;
-        File file = new File("./plugins/AgetarouUniqueGuns/weapons/AUG_NAME_CHANGE.yml");
         File augFolder = new File("./plugins/AgetarouUniqueGuns/weapons/");
+        File file = new File(augFolder + "AUG_NAME_CHANGE.yml");
+
         if (!augFolder.exists()) {
             return new FactoryResponse(FactoryResponse.FactoryStatus.NO_NEED, null);
         }
