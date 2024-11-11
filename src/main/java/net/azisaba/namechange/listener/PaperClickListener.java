@@ -56,6 +56,10 @@ public class PaperClickListener implements Listener {
         if (!displayName.startsWith(ChatColor.YELLOW + "名前変更引換券: " + ChatColor.AQUA)) {
             return;
         }
+        if(!NameChangeAutomation.INSTANCE.getPluginConfig().isLobby()){
+            p.sendMessage(Chat.f("&cロビーでのみ利用可能です"));
+            return;
+        }
         String id = displayName.substring(displayName.indexOf(ChatColor.AQUA + "") + 2);
         cooldown.put(p.getUniqueId(), System.currentTimeMillis() + 5000L);
 

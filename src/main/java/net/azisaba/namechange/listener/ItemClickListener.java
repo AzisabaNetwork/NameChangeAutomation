@@ -33,6 +33,11 @@ public class ItemClickListener implements Listener {
             return;
         }
 
+        if(!NameChangeAutomation.INSTANCE.getPluginConfig().isLobby()){
+            p.sendMessage(Chat.f("&cロビーでのみ使用可能です"));
+            return;
+        }
+
         if (item.getAmount() > 1) {
             p.sendMessage(Chat.f("&c重ねず、一つの状態でクリックしてください、"));
             return;

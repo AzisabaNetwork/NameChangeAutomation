@@ -35,6 +35,10 @@ public class ItemNIBaseWeapon extends GuiItem {
 
     @Override
     public void onClick(InventoryClickEvent e){
+        if(!NameChangeAutomation.INSTANCE.getPluginConfig().isLobby()){
+            e.getWhoClicked().sendMessage(Chat.f("&cロビーでのみ使用可能です"));
+            return;
+        }
         NameChangeAutomation.INSTANCE.getChatReader().registerNextChat(gui.player, ChatContentType.BASE_WEAPON);
         gui.player.closeInventory();
         JSONMessage.create(Chat.f("&aチャットに変更したいベース武器のIDを入力してください")).title(0, 100, 20, gui.player);

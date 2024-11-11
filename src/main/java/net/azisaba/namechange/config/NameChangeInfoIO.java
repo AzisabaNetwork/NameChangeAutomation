@@ -4,6 +4,7 @@ import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.data.NameChangeInfoData;
 import net.azisaba.namechange.data.WaitingAcceptData;
+import net.azisaba.namechange.task.CSPReloadTask;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -121,6 +122,7 @@ public class NameChangeInfoIO {
         File yamlFile = new File(nameChangeInfoFolder, weaponNodeName + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(yamlFile);
 
+        modifyCustomModelData(weaponNodeName,cmd);
         config.set(weaponNodeName + ".Custom_Model_Data", cmd);
 
         try {
@@ -166,6 +168,35 @@ public class NameChangeInfoIO {
         }else{
             return null;
         }
+    }
+
+    public void modifyCustomModelData(String weaponNode, int customModelDataValue) {
+        File file = new File("./plugins/CrackShotPlus/weapons/CSP_NAME_CHANGE.yml");
+
+        // YAMLファイルを読み込み
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+        // WeaponNode.Heldのパスを作成
+        String path = weaponNode + ".Held";
+
+        // セクションが存在しない場合は作成
+        if (config.getConfigurationSection(path) == null) {
+            config.createSection(path);
+        }
+
+        // CustomModelDataを挿入または上書き
+        config.set(path + ".Custom_Model_Data", customModelDataValue);
+
+        // ファイルに保存
+        try {
+            config.save(file);
+            System.out.println("CustomModelDataを正常に挿入/上書きしました。");
+            new CSPReloadTask().runTask(NameChangeAutomation.INSTANCE);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("ファイルの保存中にエラーが発生しました。");
+        }
+
     }
 
 
