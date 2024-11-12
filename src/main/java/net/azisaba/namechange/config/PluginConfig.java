@@ -23,6 +23,6 @@ public class PluginConfig extends Config {
         super.loadConfig();
 
         nameChangeable = config.getStringList("NameChangeable");
-        isLobby = config.getBoolean("isLobby");
+        isLobby = config.getBoolean("isLobby",false);
     }
 }

@@ -57,8 +57,8 @@ public class ItemAccept extends GuiItem {
         data.setCompleted();
 
         Player namedplayer = Bukkit.getPlayer(data.getAuthorUUID());
-        NameChangeInfoIO nameinfo = new NameChangeInfoIO();
-        nameinfo.save(data);
+        NameChangeInfoIO nameInfoIO = NameChangeAutomation.INSTANCE.getNameInfoIO();
+        nameInfoIO.save(data);
         if(namedplayer != null){
             namedplayer.sendMessage("ネームドの申請が許可されました");
         }

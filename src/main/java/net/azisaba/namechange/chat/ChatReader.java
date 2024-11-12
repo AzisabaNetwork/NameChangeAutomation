@@ -89,12 +89,12 @@ public class ChatReader {
                 if (author == null) {
                     p.sendMessage(Chat.f("&c指定されたプレイヤーは存在しません!!"));
                 } else {
-                    new NameChangeInfoIO().saveAuthor(node, author);
+                    NameChangeAutomation.INSTANCE.getNameInfoIO().saveAuthor(node, author);
                 }
             }else {
                 p.sendMessage("武器を手に持って実行してください" + node);
             }
-            NameChangeInfoData data = new NameChangeInfoIO().load(node);
+            NameChangeInfoData data = NameChangeAutomation.INSTANCE.getNameInfoIO().load(node);
             gui.openPage(new PageEditNameInfo(gui,node,data));
         }else if(type == ChatContentType.APPROVER_PLAYER_NAME) {
             InventoryGui gui = new InventoryGui(p);
@@ -110,7 +110,7 @@ public class ChatReader {
                 p.sendMessage("武器を手に持って実行してください" + node);
             }
 
-            NameChangeInfoData data = new NameChangeInfoIO().load(node);
+            NameChangeInfoData data = NameChangeAutomation.INSTANCE.getNameInfoIO().load(node);
             gui.openPage(new PageEditNameInfo(gui,node,data));
 
         }else if(type == ChatContentType.BASE_WEAPON) {
@@ -120,9 +120,9 @@ public class ChatReader {
             if(baseWeapon == null){
                 p.sendMessage(Chat.f("&c指定された武器は存在しません!!"));
             }else {
-                new NameChangeInfoIO().saveBaseWeapon(node, msg);
+                NameChangeAutomation.INSTANCE.getNameInfoIO().saveBaseWeapon(node, msg);
             }
-            NameChangeInfoData data = new NameChangeInfoIO().load(node);
+            NameChangeInfoData data = NameChangeAutomation.INSTANCE.getNameInfoIO().load(node);
             gui.openPage(new PageEditNameInfo(gui,node,data));
 
         }else if(type == ChatContentType.NUMBER) {
@@ -130,9 +130,9 @@ public class ChatReader {
             String node = new CSUtility().getWeaponTitle(p.getInventory().getItemInMainHand());
             String stringNumber = msg.replaceAll("[^0-9]", "");
             if(stringNumber != null) {
-                new NameChangeInfoIO().saveCustomModelData(node, Integer.parseInt(stringNumber));
+                NameChangeAutomation.INSTANCE.getNameInfoIO().saveCustomModelData(node, Integer.parseInt(stringNumber));
             }
-            NameChangeInfoData data = new NameChangeInfoIO().load(node);
+            NameChangeInfoData data = NameChangeAutomation.INSTANCE.getNameInfoIO().load(node);
             gui.openPage(new PageEditNameInfo(gui,node,data));
         }
 
