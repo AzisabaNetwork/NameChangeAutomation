@@ -13,6 +13,7 @@ commands:
     permission: namechangeautomation.command.namechange
   namechangeinfo:
     permission: namechangeautomation.command.namechange
+    aliases: [ni]
 permissions:
   namechangeautomation.command.namechange:
     default: op

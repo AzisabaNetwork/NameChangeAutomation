@@ -11,6 +11,7 @@ import java.util.List;
 public class PluginConfig extends Config {
 
     private List<String> nameChangeable;
+    private boolean isLobby;
 
     public PluginConfig(@NonNull NameChangeAutomation plugin) {
         super(plugin, "configs/config.yml", "config.yml");
@@ -22,5 +23,6 @@ public class PluginConfig extends Config {
         super.loadConfig();
 
         nameChangeable = config.getStringList("NameChangeable");
+        isLobby = config.getBoolean("isLobby",false);
     }
 }

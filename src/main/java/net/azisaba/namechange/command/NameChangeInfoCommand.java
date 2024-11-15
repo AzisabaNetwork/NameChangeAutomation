@@ -27,9 +27,11 @@ public class NameChangeInfoCommand implements CommandExecutor {
             return true;
         }
 
-        NameChangeInfoData data = new NameChangeInfoIO().load(weaponNode);
+        NameChangeInfoIO nameInfoIO = NameChangeAutomation.INSTANCE.getNameInfoIO();
+        NameChangeInfoData data = nameInfoIO.load(weaponNode);
         if(data == null){
-            new NameChangeInfoIO().save(new NameChangeInfoData(weaponNode, "N/A", "N/A", "N/A", "N/A", 0),weaponNode);
+            nameInfoIO.save(new NameChangeInfoData(weaponNode, "N/A", "N/A", "N/A", "N/A", 0),weaponNode);
+            data = nameInfoIO.load(weaponNode);
         }
 
         InventoryGui gui = new InventoryGui(p);

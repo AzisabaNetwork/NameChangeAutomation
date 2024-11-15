@@ -30,6 +30,7 @@ public class NameChangeAutomation extends JavaPlugin {
     private AcceptQueueWeapons acceptQueueWeapons;
     private DenyWeapons denyWeapons;
     private ChatReader chatReader;
+    private NameChangeInfoIO nameInfoIO;
 
     public static Set<String> namedWeaponDisplayName = new HashSet<>();
 
@@ -50,6 +51,8 @@ public class NameChangeAutomation extends JavaPlugin {
 
         denyWeapons = new DenyWeapons(this);
         denyWeapons.load();
+
+        nameInfoIO = new NameChangeInfoIO();
 
         Bukkit.getPluginManager().registerEvents(new ItemClickListener(this), this);
         Bukkit.getPluginManager().registerEvents(new LoadWeaponsFileListener(this), this);
