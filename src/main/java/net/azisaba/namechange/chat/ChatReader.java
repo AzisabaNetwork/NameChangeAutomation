@@ -48,7 +48,7 @@ public class ChatReader {
         ChatContentType type = contentTypes.get(p.getUniqueId());
 
         if (type == ChatContentType.DISPLAY_NAME) {
-            plugin.getDataContainer().getNameChangeData(p).setDisplayName(msg);
+            plugin.getDataContainer().getNameChangeData(p).setDisplayName(msg.replace("&r", "&f"));
             InventoryGui gui = new InventoryGui(p);
             gui.openPage(new PageNameChange(gui));
         } else if (type == ChatContentType.LORE) {

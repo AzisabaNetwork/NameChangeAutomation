@@ -29,7 +29,7 @@ public class ItemLoreEdit extends GuiItem {
         if (data.getLore().size() >= line && data.getLore().get(line) != null) {
             msg.suggestCommand("")
                     .then(Chat.f("&b[クリックで補完]"))
-                    .suggestCommand(LegacyComponentSerializer.legacyAmpersand().serialize(data.getLore().get(line)));
+                    .suggestCommand(LegacyComponentSerializer.legacyAmpersand().serialize(data.getLore().get(line)).replace('§','&'));
         }
         msg.send(gui.player);
     }

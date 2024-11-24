@@ -32,7 +32,7 @@ public class PageEditLore extends GuiPage {
                 }
                 if (lore != null) {
                     ItemMeta meta = sign2.getItemMeta();
-                    meta.setDisplayName(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + ChatColor.translateAlternateColorCodes('&', LegacyComponentSerializer.legacyAmpersand().serialize(lore)));
+                    meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', LegacyComponentSerializer.legacyAmpersand().serialize(lore)));
                     sign2.setItemMeta(meta);
                     hasLine = true;
                 } else {

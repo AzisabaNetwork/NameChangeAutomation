@@ -162,9 +162,17 @@ public class NameChangeData {
         //CMD設定
         meta.setCustomModelData(customModelData);
 
-        meta.lore(lore);
+        meta.setLore(getRGBLore());
         item.setItemMeta(meta);
         return item;
+    }
+
+    public List<String> getRGBLore() {
+        List<String> rgbLore = new ArrayList<>();
+        for (Component component : lore){
+            rgbLore.add(ChatColor.translateAlternateColorCodes('&',LegacyComponentSerializer.legacyAmpersand().serialize(component)));
+        }
+        return rgbLore;
     }
 
 }
