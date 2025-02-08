@@ -2,7 +2,6 @@ package net.azisaba.namechange.chat;
 
 import com.shampaggon.crackshot.CSUtility;
 import lombok.RequiredArgsConstructor;
-import me.rayzr522.jsonmessage.JSONMessage;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.config.NameChangeInfoIO;
 import net.azisaba.namechange.data.NameChangeInfoData;
@@ -11,6 +10,8 @@ import net.azisaba.namechange.gui.pages.PageEditLore;
 import net.azisaba.namechange.gui.pages.PageEditNameInfo;
 import net.azisaba.namechange.gui.pages.PageNameChange;
 import net.azisaba.namechange.utils.Chat;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
@@ -56,11 +57,9 @@ public class ChatReader {
                 p.sendMessage(Chat.f("&c使用できない文字が使われています！ &7( &e| &7)"));
                 p.sendMessage(Chat.f("&a全角にするか、他の縦棒を使用してください。"));
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
-                JSONMessage.create(Chat.f("&e⇓&a説明文を打ち込んで下さい！&e⇓  "))
-                        .suggestCommand("")
-                        .then(Chat.f("&b[クリックで補完]"))
-                        .suggestCommand(msg)
-                        .send(p);
+                p.sendMessage(Component.text(Chat.f("&e⇓&a説明文を打ち込んで下さい！&e⇓  "))
+                        .append(Component.text(Chat.f("&b[クリックで補完]"))).clickEvent(ClickEvent.suggestCommand(msg)));
+
                 return;
             }
             plugin.getDataContainer().getNameChangeData(p).receiveLoreChat(msg);

@@ -1,10 +1,8 @@
 package net.azisaba.namechange.gui.items;
 
-import me.rayzr522.jsonmessage.JSONMessage;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.chat.ChatContentType;
 import net.azisaba.namechange.chat.ChatReader;
-import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.utils.Chat;
@@ -54,14 +52,11 @@ public class ItemEditLoreCS extends GuiItem {
             chatReader.registerNextChat(gui.player, ChatContentType.LOREEXREMOVE);
         }
         gui.player.closeInventory();
-        JSONMessage msg;
         if(slot == 18){
             //指定行削除用
-            msg = JSONMessage.create(Chat.f("&e⇓&a削除したい行数を数字(半角)で打ち込んで下さい！&e⇓  "));
+            gui.player.sendMessage(Component.text(Chat.f("&e⇓&a削除したい行数を数字(半角)で打ち込んで下さい！&e⇓  ")));
         }else {
-            msg = JSONMessage.create(Chat.f("&e⇓&a説明文を打ち込んで下さい！&e⇓  "));
+            gui.player.sendMessage(Component.text(Chat.f("&e⇓&a説明文を打ち込んで下さい！&e⇓  ")));
         }
-
-        msg.send(gui.player);
     }
 }

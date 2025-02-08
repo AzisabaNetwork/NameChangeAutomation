@@ -1,21 +1,20 @@
 package net.azisaba.namechange.gui.items;
 
-import com.shampaggon.crackshot.CSDirector;
 import com.shampaggon.crackshot.CSUtility;
-import me.rayzr522.jsonmessage.JSONMessage;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.chat.ChatContentType;
-import net.azisaba.namechange.config.NameChangeInfoIO;
 import net.azisaba.namechange.data.NameChangeInfoData;
 import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.utils.Chat;
 import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,13 +40,9 @@ public class ItemNIBaseWeapon extends GuiItem {
         }
         NameChangeAutomation.INSTANCE.getChatReader().registerNextChat(gui.player, ChatContentType.BASE_WEAPON);
         gui.player.closeInventory();
-        JSONMessage.create(Chat.f("&aチャットに変更したいベース武器のIDを入力してください")).title(0, 100, 20, gui.player);
-        JSONMessage msg = JSONMessage.create(Chat.f("&e⇓&a武器IDを打ち込んで下さい！&e⇓  "));
-        gui.player.getName();
-        msg.suggestCommand("")
-                .then(Chat.f("&b[クリックで登録済みのIDを入力]"))
-                .suggestCommand(data.getBaseWeapon());
-        msg.send(gui.player);
+        e.getWhoClicked().showTitle(Title.title(Component.text(Chat.f("&aチャットに変更したいベース武器のIDを入力してください")), Component.empty(), Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(1))));
+        gui.player.sendMessage(Component.text(Chat.f("&e⇓&a武器IDを打ち込んで下さい！&e⇓  ")));
+        gui.player.sendMessage(Component.text(Chat.f("&b[クリックで登録済みのIDを入力]")).clickEvent(ClickEvent.suggestCommand(data.getBaseWeapon())));
     }
 
 }

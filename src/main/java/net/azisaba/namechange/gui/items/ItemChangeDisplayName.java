@@ -1,15 +1,19 @@
 package net.azisaba.namechange.gui.items;
 
-import me.rayzr522.jsonmessage.JSONMessage;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.chat.ChatContentType;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.gui.GuiItem;
 import net.azisaba.namechange.gui.InventoryGui;
 import net.azisaba.namechange.utils.Chat;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.time.Duration;
 
 public class ItemChangeDisplayName extends GuiItem {
     public ItemChangeDisplayName(InventoryGui gui) {
@@ -25,14 +29,12 @@ public class ItemChangeDisplayName extends GuiItem {
         NameChangeAutomation.INSTANCE.getChatReader().registerNextChat(gui.player, ChatContentType.DISPLAY_NAME);
         gui.player.closeInventory();
 
-        JSONMessage.create(Chat.f("&aチャットにアイテム名を打ち込んでください！")).title(0, 100, 20, gui.player);
-
-        JSONMessage msg = JSONMessage.create(Chat.f("&e⇓&aアイテム名を打ち込んで下さい！&e⇓  "));
+        e.getWhoClicked().showTitle(Title.title(Component.text(Chat.f("&aチャットにアイテム名を打ち込んでください！")), Component.empty(), Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(1))));
+        Component msg = Component.text(Chat.f("&e⇓&aアイテム名を打ち込んで下さい！&e⇓  "));
         if (data.getDisplayName() != null) {
-            msg.suggestCommand("")
-                    .then(Chat.f("&b[クリックで補完]"))
-                    .suggestCommand(data.getDisplayName());
+            gui.player.sendMessage(msg.append(Component.text(Chat.f("&b[クリックで補完]")).clickEvent(ClickEvent.suggestCommand(data.getDisplayName()))));
+        }else {
+            gui.player.sendMessage(msg);
         }
-        msg.send(gui.player);
     }
 }
