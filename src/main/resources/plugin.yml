@@ -5,7 +5,7 @@ author: siloneco,Arisa9006,matsu1213
 description: ${project.description}
 website: ${project.url}
 depend: ["CrackShot", "CrackShotPlus", "LeonCSAddon"]
-api-version: 1.16
+api-version: 1.18
 commands:
   namechange:
     permission: namechangeautomation.command.namechange

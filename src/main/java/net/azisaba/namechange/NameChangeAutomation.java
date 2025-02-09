@@ -88,6 +88,7 @@ public class NameChangeAutomation extends JavaPlugin {
         Bukkit.getLogger().info(getName() + " disabled.");
     }
 
+
     public void loadNameChangeWeapons(CSDirector plugin) {
         File parentFile = new File(plugin.getDataFolder(), "weapons");
         File nameChangeDirectory = new File(parentFile, "NameChange");
@@ -95,6 +96,12 @@ public class NameChangeAutomation extends JavaPlugin {
         loadWeapons(plugin, nameChangeDirectory);
 
         plugin.csminion.completeList();
+    }
+    public static NameChangeAutomation getINSTANCE() {
+        if(INSTANCE == null ){
+            INSTANCE = (NameChangeAutomation) Bukkit.getPluginManager().getPlugin("NameChangeAutomation");
+        }
+        return INSTANCE;
     }
 
     public NameChangeInfoIO getNameChangeInfoIO() {
