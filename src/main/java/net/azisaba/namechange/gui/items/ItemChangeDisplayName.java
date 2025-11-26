@@ -29,7 +29,7 @@ public class ItemChangeDisplayName extends GuiItem {
         NameChangeAutomation.INSTANCE.getChatReader().registerNextChat(gui.player, ChatContentType.DISPLAY_NAME);
         gui.player.closeInventory();
 
-        e.getWhoClicked().showTitle(Title.title(Component.text(Chat.f("&aチャットにアイテム名を打ち込んでください！")), Component.empty(), Title.Times.times(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(1))));
+        e.getWhoClicked().showTitle(Title.title(Component.text(Chat.f("&aチャットにアイテム名を打ち込んでください！")), Component.empty(), Title.Times.of(Duration.ofMillis(0), Duration.ofSeconds(5), Duration.ofSeconds(1))));
         Component msg = Component.text(Chat.f("&e⇓&aアイテム名を打ち込んで下さい！&e⇓  "));
         if (data.getDisplayName() != null) {
             gui.player.sendMessage(msg.append(Component.text(Chat.f("&b[クリックで補完]")).clickEvent(ClickEvent.suggestCommand(data.getDisplayName()))));

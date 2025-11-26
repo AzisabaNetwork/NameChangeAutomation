@@ -2,6 +2,7 @@ package net.azisaba.namechange.gui.items;
 
 import com.shampaggon.crackshot.CSDirector;
 import com.shampaggon.crackshot.CSUtility;
+import dev.felnull.reglia.RegliaAPI;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.data.WaitingAcceptData;
@@ -22,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Objects;
 
 public class ItemConfirm extends GuiItem {
+
     public ItemConfirm(InventoryGui gui) {
         super(gui, new ItemStack(Material.GREEN_TERRACOTTA));
         this.setDisplayName(Chat.f("&cこれで申請する"));
@@ -60,6 +62,16 @@ public class ItemConfirm extends GuiItem {
 
                 NameChangeAutomation.INSTANCE.getDataContainer().unregisterNameChangeData(gui.player);
                 NameChangeAutomation.INSTANCE.getDataContainer().removeFile(gui.player);
+
+                RegliaAPI apiRef = NameChangeAutomation.regliaAPI;
+                if (apiRef == null) {
+                    NameChangeAutomation.INSTANCE.getLogger().warning("Reglia API not hooked yet; skipping notify.");
+                    return;
+                }
+
+                apiRef.notify("named",
+                                gui.player.getName() + "がネームド武器を申請しました 武器名:" + data.getDisplayName())
+                        .exceptionally(ex -> { NameChangeAutomation.INSTANCE.getLogger().warning("Reglia通知エラー: " + ex.getMessage()); return false; });
 
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     // 運営にネームド追加を通知する (試合鯖にいる人にも通知出来たらしたい)

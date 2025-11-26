@@ -1,6 +1,7 @@
 package net.azisaba.namechange;
 
 import com.shampaggon.crackshot.CSDirector;
+import dev.felnull.reglia.RegliaAPI;
 import lombok.Getter;
 import net.azisaba.namechange.chat.ChatReader;
 import net.azisaba.namechange.command.NameChangeCommand;
@@ -35,6 +36,9 @@ public class NameChangeAutomation extends JavaPlugin {
     public static Set<String> namedWeaponDisplayName = new HashSet<>();
 
     private PluginConfig pluginConfig;
+
+    public volatile static RegliaAPI regliaAPI;
+
 
     @Override
     public void onEnable() {
@@ -72,6 +76,8 @@ public class NameChangeAutomation extends JavaPlugin {
         if (cs != null) {
             loadNameChangeWeapons((CSDirector) cs);
         }
+
+        hookReglia();
 
         Bukkit.getLogger().info(getName() + " enabled.");
     }
@@ -147,6 +153,14 @@ public class NameChangeAutomation extends JavaPlugin {
         return conversionDisplayName;
     }
 
+    private void hookReglia() {
+        this.regliaAPI = org.bukkit.Bukkit.getServicesManager().load(RegliaAPI.class);
+        if (regliaAPI != null) {
+            getLogger().info("Reglia API hooked: v" + regliaAPI.getApiVersion());
+        } else {
+            getLogger().warning("Reglia API not available yet. Waiting for registration…");
+        }
+    }
 }
 
 
