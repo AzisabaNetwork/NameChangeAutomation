@@ -1,6 +1,7 @@
 package net.azisaba.namechange;
 
-import com.shampaggon.crackshot.CSDirector;
+import net.azisaba.crackshot.CrackShot;
+import net.azisaba.crackshot.CSUtility;
 import lombok.Getter;
 import net.azisaba.namechange.chat.ChatReader;
 import net.azisaba.namechange.command.NameChangeCommand;
@@ -69,8 +70,8 @@ public class NameChangeAutomation extends JavaPlugin {
         }
 
         Plugin cs = Bukkit.getPluginManager().getPlugin("CrackShot");
-        if (cs != null) {
-            loadNameChangeWeapons((CSDirector) cs);
+        if (cs instanceof CrackShot) {
+            loadNameChangeWeapons((CrackShot) cs);
         }
 
         Bukkit.getLogger().info(getName() + " enabled.");
@@ -89,10 +90,11 @@ public class NameChangeAutomation extends JavaPlugin {
     }
 
 
-    public void loadNameChangeWeapons(CSDirector plugin) {
+    public void loadNameChangeWeapons(CrackShot plugin) {
         File parentFile = new File(plugin.getDataFolder(), "weapons");
         File nameChangeDirectory = new File(parentFile, "NameChange");
 
+        namedWeaponDisplayName.clear();
         loadWeapons(plugin, nameChangeDirectory);
 
         plugin.csminion.completeList();
@@ -108,7 +110,7 @@ public class NameChangeAutomation extends JavaPlugin {
         return new NameChangeInfoIO();
     }
 
-    public void loadWeapons(CSDirector plugin, File directory) {
+    public void loadWeapons(CrackShot plugin, File directory) {
         File[] files = directory.listFiles(pathname -> {
             String fileName = pathname.getName().toLowerCase(Locale.ROOT);
             return fileName.endsWith(".yml") || fileName.endsWith(".yaml");
@@ -123,7 +125,7 @@ public class NameChangeAutomation extends JavaPlugin {
                 continue;
             }
             if (file.getName().toLowerCase().endsWith(".yml") || file.getName().toLowerCase().endsWith(".yaml")) {
-                plugin.fillHashMaps(YamlConfiguration.loadConfiguration(file));
+                plugin.data.fillHashMaps(YamlConfiguration.loadConfiguration(file), file);
                 YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
 
                 // トップレベルのキーを取得してループ処理
@@ -141,14 +143,13 @@ public class NameChangeAutomation extends JavaPlugin {
 
     public static Set<String> getNamedWeaponDisplayName (){
         Set<String> conversionDisplayName = new HashSet<>();
-        Iterator<String> iterator = NameChangeAutomation.namedWeaponDisplayName.iterator();
-        CSDirector CSD = (CSDirector) Bukkit.getPluginManager().getPlugin("CrackShot");
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("CrackShot");
+        if (!(plugin instanceof CrackShot)) {
+            return conversionDisplayName;
+        }
 
-        while(iterator.hasNext()){
-            if(CSD == null){
-                return null;
-            }
-            conversionDisplayName.add(CSD.toDisplayForm(iterator.next()));
+        for (String displayName : NameChangeAutomation.namedWeaponDisplayName) {
+            conversionDisplayName.add(CSUtility.colorize(displayName));
         }
 
         return conversionDisplayName;

@@ -1,7 +1,7 @@
 package net.azisaba.namechange.listener;
 
-import com.shampaggon.crackshot.CSDirector;
-import com.shampaggon.crackshot.CSUtility;
+import net.azisaba.crackshot.CrackShot;
+import net.azisaba.crackshot.CSUtility;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.gui.GuiItem;
@@ -76,8 +76,14 @@ public class GuiListener implements Listener {
             if(e.getClickedInventory() == page.inventory) return;
             CSUtility csUtility = new CSUtility();
             String id = csUtility.getWeaponTitle(item2);
-            CSDirector director = (CSDirector) Bukkit.getPluginManager().getPlugin("CrackShot");
-            String inventoryControl = director.getString(id + ".Item_Information.Inventory_Control");
+            CrackShot director = (CrackShot) Bukkit.getPluginManager().getPlugin("CrackShot");
+            if (director == null || id == null) {
+                return;
+            }
+            String inventoryControl = director.data.getString(id + ".Item_Information.Inventory_Control");
+            if (inventoryControl == null) {
+                return;
+            }
             List<String> inventoryControlList = Arrays.asList(inventoryControl.split(","));
 
             if (inventoryControlList.isEmpty()) {

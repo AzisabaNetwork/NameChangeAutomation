@@ -1,6 +1,6 @@
 package net.azisaba.namechange.command;
 
-import com.shampaggon.crackshot.CSUtility;
+import net.azisaba.crackshot.CSUtility;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.config.NameChangeInfoIO;
 import net.azisaba.namechange.data.NameChangeInfoData;

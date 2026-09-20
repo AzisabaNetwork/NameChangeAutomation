@@ -1,7 +1,7 @@
 package net.azisaba.namechange.data;
 
-import com.shampaggon.crackshot.CSDirector;
-import com.shampaggon.crackshot.CSUtility;
+import net.azisaba.crackshot.CrackShot;
+import net.azisaba.crackshot.CSUtility;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
@@ -131,10 +131,10 @@ public class NameChangeData {
         Component newDisplayName = item.getItemMeta().displayName();
         CSUtility util = new CSUtility();
         ItemStack prevItem = util.generateWeapon(getPreviousWeaponID());
-        CSDirector CSD = (CSDirector) Bukkit.getPluginManager().getPlugin("CrackShot");
+        CrackShot CSD = (CrackShot) Bukkit.getPluginManager().getPlugin("CrackShot");
         if(CSD != null) {
 
-            if (util.getHandle().parentlist.containsKey(CSD.getPureName(item.getItemMeta().getDisplayName()))) {
+            if (util.getHandle().data.parentlist.containsKey(CSD.getPureName(item.getItemMeta().getDisplayName()))) {
                 return true;
             }
 

@@ -1,7 +1,7 @@
 package net.azisaba.namechange.gui.items;
 
-import com.shampaggon.crackshot.CSDirector;
-import com.shampaggon.crackshot.CSUtility;
+import net.azisaba.crackshot.CrackShot;
+import net.azisaba.crackshot.CSUtility;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.data.WaitingAcceptData;
@@ -55,8 +55,14 @@ public class ItemConfirm extends GuiItem {
 
                 NameChangeAutomation.INSTANCE.getAcceptQueueWeapons().addWaitingData(waitingData);
 
-                CSDirector crackshot = (CSDirector) Bukkit.getPluginManager().getPlugin("CrackShot");
-                crackshot.fillHashMaps(YamlConfiguration.loadConfiguration(waitingData.getFiles().getCrackShotFile()));
+                CrackShot crackshot = (CrackShot) Bukkit.getPluginManager().getPlugin("CrackShot");
+                if (crackshot != null) {
+                    crackshot.data.fillHashMaps(
+                            YamlConfiguration.loadConfiguration(waitingData.getFiles().getCrackShotFile()),
+                            waitingData.getFiles().getCrackShotFile()
+                    );
+                    crackshot.csminion.completeList();
+                }
 
                 NameChangeAutomation.INSTANCE.getDataContainer().unregisterNameChangeData(gui.player);
                 NameChangeAutomation.INSTANCE.getDataContainer().removeFile(gui.player);

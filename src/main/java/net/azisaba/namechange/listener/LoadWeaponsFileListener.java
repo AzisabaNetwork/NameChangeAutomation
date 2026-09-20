@@ -1,6 +1,6 @@
 package net.azisaba.namechange.listener;
 
-import com.shampaggon.crackshot.CSDirector;
+import net.azisaba.crackshot.CrackShot;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.task.CSPReloadTask;
@@ -49,7 +49,7 @@ public class LoadWeaponsFileListener implements Listener {
             if (cs == null) {
                 return;
             }
-            CSDirector director = (CSDirector) cs;
+            CrackShot director = (CrackShot) cs;
             plugin.loadNameChangeWeapons(director);
 
             e.getPlayer().sendMessage(Chat.f("&e子ディレクトリの読み込みを完了しました"));
@@ -75,7 +75,7 @@ public class LoadWeaponsFileListener implements Listener {
             if (cs == null) {
                 return;
             }
-            CSDirector director = (CSDirector) cs;
+            CrackShot director = (CrackShot) cs;
             plugin.loadNameChangeWeapons(director);
 
             e.getSender().sendMessage(Chat.f("&e子ディレクトリの読み込みを完了しました"));

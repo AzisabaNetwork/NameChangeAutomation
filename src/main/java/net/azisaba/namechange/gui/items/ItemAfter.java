@@ -1,6 +1,6 @@
 package net.azisaba.namechange.gui.items;
 
-import com.shampaggon.crackshot.CSUtility;
+import net.azisaba.crackshot.CSUtility;
 import net.azisaba.namechange.data.NameChangeData;
 import net.azisaba.namechange.data.WaitingAcceptData;
 import net.azisaba.namechange.gui.GuiItem;

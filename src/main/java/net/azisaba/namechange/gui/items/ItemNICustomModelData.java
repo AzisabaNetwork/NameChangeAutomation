@@ -1,7 +1,7 @@
 package net.azisaba.namechange.gui.items;
 
-import com.shampaggon.crackshot.CSDirector;
-import com.shampaggon.crackshot.CSUtility;
+import net.azisaba.crackshot.CrackShot;
+import net.azisaba.crackshot.CSUtility;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.chat.ChatContentType;
 import net.azisaba.namechange.config.NameChangeInfoIO;

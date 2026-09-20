@@ -1,6 +1,6 @@
 package net.azisaba.namechange.task;
 
-import com.shampaggon.crackshot.CSDirector;
+import net.azisaba.crackshot.CrackShot;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.utils.Chat;
 import org.bukkit.Bukkit;
@@ -19,7 +19,7 @@ public class CSPReloadTask extends BukkitRunnable {
         if (cs == null) {
             return;
         }
-        CSDirector director = (CSDirector) cs;
+        CrackShot director = (CrackShot) cs;
         NameChangeAutomation.INSTANCE.loadNameChangeWeapons(director);
 
     }

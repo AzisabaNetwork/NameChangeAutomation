@@ -12,3 +12,10 @@ CrackShot
 CrackShotPlus
 AgetarouUniqueGuns
 LeonCSAddon
+
+## 動作環境
+
+- Paper 1.21.11
+- Java 21
+- Azisaba版 CrackShot 1.0.1
+- CrackShotPlus 1.2.2

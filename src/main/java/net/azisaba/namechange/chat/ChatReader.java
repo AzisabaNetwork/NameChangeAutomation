@@ -1,6 +1,6 @@
 package net.azisaba.namechange.chat;
 
-import com.shampaggon.crackshot.CSUtility;
+import net.azisaba.crackshot.CSUtility;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.namechange.NameChangeAutomation;
 import net.azisaba.namechange.config.NameChangeInfoIO;
