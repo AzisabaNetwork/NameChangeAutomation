@@ -11,7 +11,10 @@ LGWの名前変更申請を自動化するPlugin
 CrackShot
 CrackShotPlus
 AgetarouUniqueGuns
-LeonCSAddon
+LeonCSAddon（任意・旧設定フォルダとの互換用）
+
+LeonCSAddonの有効機能はAzisaba版CrackShotへ統合されているため、
+NameChangeAutomationの起動にLeonCSAddon本体は不要です。
 
 ## 動作環境
 
