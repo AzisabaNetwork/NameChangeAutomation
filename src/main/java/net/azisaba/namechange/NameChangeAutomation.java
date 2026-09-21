@@ -36,6 +36,7 @@ public class NameChangeAutomation extends JavaPlugin {
     public static Set<String> namedWeaponDisplayName = new HashSet<>();
 
     private PluginConfig pluginConfig;
+    private boolean lobbyIntegrationWarningLogged;
 
     @Override
     public void onEnable() {
@@ -108,6 +109,22 @@ public class NameChangeAutomation extends JavaPlugin {
 
     public NameChangeInfoIO getNameChangeInfoIO() {
         return new NameChangeInfoIO();
+    }
+
+    public boolean isLobbyServer() {
+        Plugin leonGunWar = Bukkit.getPluginManager().getPlugin("LeonGunWar");
+        if (leonGunWar != null && leonGunWar.isEnabled()) {
+            try {
+                Object mainConfig = leonGunWar.getClass().getMethod("getMainConfig").invoke(leonGunWar);
+                return mainConfig.getClass().getField("isLobby").getBoolean(mainConfig);
+            } catch (ReflectiveOperationException exception) {
+                if (!lobbyIntegrationWarningLogged) {
+                    getLogger().warning("Could not read LeonGunWar lobby status; falling back to NameChangeAutomation config.yml.");
+                    lobbyIntegrationWarningLogged = true;
+                }
+            }
+        }
+        return pluginConfig.isLobby();
     }
 
     public void loadWeapons(CrackShot plugin, File directory) {
