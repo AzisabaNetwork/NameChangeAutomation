@@ -34,7 +34,7 @@ public class ItemNIBaseWeapon extends GuiItem {
 
     @Override
     public void onClick(InventoryClickEvent e){
-        if(!NameChangeAutomation.INSTANCE.getPluginConfig().isLobby()){
+        if (!NameChangeAutomation.INSTANCE.isLobbyServer()) {
             e.getWhoClicked().sendMessage(Chat.f("&cロビーでのみ使用可能です"));
             return;
         }

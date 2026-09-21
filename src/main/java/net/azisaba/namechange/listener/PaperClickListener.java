@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -35,7 +36,7 @@ public class PaperClickListener implements Listener {
     public void onInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
 
-        if (!e.getAction().toString().startsWith("RIGHT_CLICK_")) {
+        if (e.getHand() != EquipmentSlot.HAND || !e.getAction().toString().startsWith("RIGHT_CLICK_")) {
             return;
         }
         ItemStack item = e.getItem();
@@ -56,7 +57,8 @@ public class PaperClickListener implements Listener {
         if (!displayName.startsWith(ChatColor.YELLOW + "名前変更引換券: " + ChatColor.AQUA)) {
             return;
         }
-        if(!NameChangeAutomation.INSTANCE.getPluginConfig().isLobby()){
+        e.setCancelled(true);
+        if (!plugin.isLobbyServer()) {
             p.sendMessage(Chat.f("&cロビーでのみ利用可能です"));
             return;
         }
@@ -95,18 +97,19 @@ public class PaperClickListener implements Listener {
         }
 
         ItemStack weapon = new CSUtility().generateWeapon(id);
-        WaitingAcceptData data = plugin.getAcceptQueueWeapons().getWaitingData(id);
-        ItemMeta meta = weapon.getItemMeta();
-        if(data != null) {
-            meta.setCustomModelData(data.getCustomModelData());
-        }
-        weapon.setItemMeta(meta);
         if (weapon == null) {
             p.sendMessage(ChatColor.RED + "エラーが発生しました (武器が存在しません)");
             p.sendMessage(ChatColor.RED + "武器ID: " + ChatColor.YELLOW + id);
             p.sendMessage(ChatColor.RED + "運営に報告してください。");
             return;
         }
+
+        WaitingAcceptData data = plugin.getAcceptQueueWeapons().getWaitingData(id);
+        ItemMeta meta = weapon.getItemMeta();
+        if(data != null) {
+            meta.setCustomModelData(data.getCustomModelData());
+        }
+        weapon.setItemMeta(meta);
 
         if (!p.getInventory().getItemInMainHand().equals(item)) {
             p.sendMessage(ChatColor.RED + "利き手に紙を持って右クリックしてください。");
